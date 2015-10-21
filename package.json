@@ -1,0 +1,33 @@
+{
+  "name": "php-integrator-tooltips",
+  "main": "./lib/main",
+  "version": "0.0.1",
+  "description": "Shows tooltips (e.g. for methods and classes) in your PHP source code.",
+  "repository":  "https://github.com/Gert-dev/php-integrator-tooltips.git",
+  "license": "MIT",
+
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+
+  "consumedServices": {
+    "php-integrator.service": {
+      "versions": {
+        "^0.0.1": "setService"
+      }
+    }
+  },
+
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "sub-atom": "~1.0.0"
+  },
+
+  "keywords": [
+    "php",
+    "tooltips",
+    "integrator",
+    "integration",
+    "php-integrator"
+  ]
+}
