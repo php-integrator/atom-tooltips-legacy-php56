@@ -4,18 +4,22 @@ AbstractProvider = require './abstract-provider'
 
 module.exports =
 
+##*
+# Provides tooltips for classes, traits, interfaces, ...
+##
 class ClassProvider extends AbstractProvider
+    ###*
+     * @inheritdoc
+    ###
     hoverEventSelectors: '.entity.inherited-class, .support.namespace, .support.class, .comment-clickable .region'
 
     ###*
-     * Retrieves a tooltip for the word given.
-     * @param  {TextEditor} editor         TextEditor to search for namespace of term.
-     * @param  {string}     term           Term to search for.
-     * @param  {Point}      bufferPosition The cursor location the term is at.
+     * @inheritdoc
     ###
-    getTooltipForWord: (editor, term, bufferPosition) ->
-        fullClassName = @service.determineFullClassName(editor, term)
-        classInfo = @service.getClassMembers(fullClassName)
+    getTooltipForWord: (editor, bufferPosition, name) ->
+        fullClassName = @service.determineFullClassName(editor, name)
+        
+        classInfo = @service.getClassInfo(fullClassName)
 
         return unless classInfo and classInfo.wasFound
 
@@ -52,19 +56,13 @@ class ClassProvider extends AbstractProvider
         return description
 
     ###*
-     * Gets the correct selector when a class or namespace is clicked.
-     *
-     * @param  {jQuery.Event}  event  A jQuery event.
-     *
-     * @return {object|null} A selector to be used with jQuery.
+     * @inheritdoc
     ###
     getSelectorFromEvent: (event) ->
         return @service.getClassSelectorFromEvent(event)
 
     ###*
-     * Gets the correct element to attach the popover to from the retrieved selector.
-     * @param  {jQuery.Event}  event  A jQuery event.
-     * @return {object|null}          A selector to be used with jQuery.
+     * @inheritdoc
     ###
     getPopoverElementFromSelector: (selector) ->
         # getSelectorFromEvent can return multiple items because namespaces and class names are different HTML elements.

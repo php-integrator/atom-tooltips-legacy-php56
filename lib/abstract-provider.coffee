@@ -5,7 +5,13 @@ SubAtom = require 'sub-atom'
 
 module.exports =
 
+##*
+# Base class for providers.
+##
 class AbstractProvider
+    ###*
+     * The class selectors for which a hover event will be triggered.
+    ###
     hoverEventSelectors: ''
 
     ###*
@@ -15,6 +21,8 @@ class AbstractProvider
 
     ###*
      * Initializes this provider.
+     *
+     * @param {mixed} service
     ###
     activate: (service) ->
         @service = service
@@ -109,8 +117,8 @@ class AbstractProvider
      * @param {int}        fadeInTime     The amount of time to take to fade in the tooltip.
     ###
     showPopoverFor: (editor, element, bufferPosition, delay = 500, fadeInTime = 100) ->
-        term = $(element).text()
-        tooltipText = @getTooltipForWord(editor, term, bufferPosition)
+        name = $(element).text()
+        tooltipText = @getTooltipForWord(editor, bufferPosition, name)
 
         if tooltipText?.length > 0
             popoverElement = @getPopoverElementFromSelector(element)
@@ -131,10 +139,11 @@ class AbstractProvider
      * Retrieves a tooltip for the word given.
      *
      * @param {TextEditor} editor         TextEditor to search for namespace of term.
-     * @param {string}     term           Term to search for.
      * @param {Point}      bufferPosition The cursor location the term is at.
+     * @param {string}     name           The name of the element to retrieve the tooltip for.
     ###
-    getTooltipForWord: (editor, term, bufferPosition) ->
+    getTooltipForWord: (editor, bufferPosition, name) ->
+        throw new Error("This method is abstract and must be implemented!")
 
     ###*
      * Gets the correct selector when a selector is clicked.

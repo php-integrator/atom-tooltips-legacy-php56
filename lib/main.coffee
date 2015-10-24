@@ -1,7 +1,7 @@
 {Disposable} = require 'atom'
 
+MethodProvider = require './method-provider.coffee'
 ClassProvider   = require './class-provider.coffee'
-FunctionProvider = require './function-provider.coffee'
 PropertyProvider = require './property-provider.coffee'
 
 module.exports =
@@ -27,10 +27,8 @@ module.exports =
     activateProviders: (service) ->
         @providers = []
         @providers.push new ClassProvider()
-
-        # TODO: Rewrite these too.
-        #@providers.push new FunctionProvider()
-        #@providers.push new PropertyProvider()
+        @providers.push new MethodProvider()
+        @providers.push new PropertyProvider()
 
         for provider in @providers
             provider.activate(service)
@@ -46,6 +44,8 @@ module.exports =
 
     ###*
      * Sets the php-integrator service.
+     *
+     * @param {mixed} service
     ###
     setService: (service) ->
         @activateProviders(service)

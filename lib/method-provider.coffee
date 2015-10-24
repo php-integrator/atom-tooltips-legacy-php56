@@ -1,24 +1,23 @@
-{Point} = require 'atom'
-{TextEditor} = require 'atom'
-
 AbstractProvider = require './abstract-provider'
 
 module.exports =
 
-class FunctionProvider extends AbstractProvider
+##*
+# Provides tooltips for member methods.
+##
+class MethodProvider extends AbstractProvider
+    ###*
+     * @inheritdoc
+    ###
     hoverEventSelectors: '.function-call'
 
     ###*
-     * Retrieves a tooltip for the word given.
-     * @param  {TextEditor} editor         TextEditor to search for namespace of term.
-     * @param  {string}     term           Term to search for.
-     * @param  {Point}      bufferPosition The cursor location the term is at.
+     * @inheritdoc
     ###
-    getTooltipForWord: (editor, term, bufferPosition) ->
-        value = @parser.getMemberContext(editor, term, bufferPosition)
+    getTooltipForWord: (editor, bufferPosition, name) ->
+        value = @service.getClassMember(editor, bufferPosition, name)
 
-        if not value
-            return
+        return unless value
 
         description = ""
 
@@ -36,7 +35,7 @@ class FunctionProvider extends AbstractProvider
             accessModifier = 'private'
 
         description += "<p><div>"
-        description += accessModifier + ' ' + returnType + ' <strong>' + term + '</strong>' + '('
+        description += accessModifier + ' ' + returnType + ' <strong>' + name + '</strong>' + '('
 
         if value.args.parameters.length > 0
             description += value.args.parameters.join(', ');

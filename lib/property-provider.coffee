@@ -1,23 +1,23 @@
-{TextEditor} = require 'atom'
-
 AbstractProvider = require './abstract-provider'
 
 module.exports =
 
+##*
+# Provides tooltips for member properties.
+##
 class PropertyProvider extends AbstractProvider
+    ###*
+     * @inheritdoc
+    ###
     hoverEventSelectors: '.property'
 
     ###*
-     * Retrieves a tooltip for the word given.
-     * @param  {TextEditor} editor         TextEditor to search for namespace of term.
-     * @param  {string}     term           Term to search for.
-     * @param  {Point}      bufferPosition The cursor location the term is at.
+     * @inheritdoc
     ###
-    getTooltipForWord: (editor, term, bufferPosition) ->
-        value = @parser.getMemberContext(editor, term, bufferPosition)
+    getTooltipForWord: (editor, bufferPosition, name) ->
+        value = @service.getClassMember(editor, bufferPosition, name)
 
-        if not value
-            return
+        return unless value
 
         accessModifier = ''
         returnType = if value.args.return then value.args.return else 'mixed'
@@ -35,7 +35,7 @@ class PropertyProvider extends AbstractProvider
         description = ''
 
         description += "<p><div>"
-        description += accessModifier + ' ' + returnType + '<strong>' + ' $' + term + '</strong>'
+        description += accessModifier + ' ' + returnType + '<strong>' + ' $' + name + '</strong>'
         description += '</div></p>'
 
         # Show the summary (short description).
