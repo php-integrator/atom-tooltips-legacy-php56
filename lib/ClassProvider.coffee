@@ -1,6 +1,6 @@
 $ = require 'jquery'
 
-AbstractProvider = require './abstract-provider'
+AbstractProvider = require './AbstractProvider'
 
 module.exports =
 
@@ -18,7 +18,7 @@ class ClassProvider extends AbstractProvider
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
         fullClassName = @service.determineFullClassName(editor, name)
-        
+
         classInfo = @service.getClassInfo(fullClassName)
 
         return unless classInfo and classInfo.wasFound

@@ -1,8 +1,8 @@
 {Disposable} = require 'atom'
 
-MethodProvider = require './method-provider.coffee'
-ClassProvider   = require './class-provider.coffee'
-PropertyProvider = require './property-provider.coffee'
+MethodProvider = require './MethodProvider'
+ClassProvider   = require './ClassProvider'
+PropertyProvider = require './PropertyProvider'
 
 module.exports =
     ###*

@@ -1,4 +1,4 @@
-AbstractProvider = require './abstract-provider'
+AbstractProvider = require './AbstractProvider'
 
 module.exports =
 
