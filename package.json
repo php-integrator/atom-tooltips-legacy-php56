@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "description": "Shows tooltips (e.g. for methods and classes) in your PHP source code.",
   "repository":  "https://github.com/Gert-dev/php-integrator-tooltips.git",
-  "license": "MIT",
+  "license": "GPL-3.0",
 
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
@@ -13,7 +13,7 @@
   "consumedServices": {
     "php-integrator.service": {
       "versions": {
-        "^0.0.1": "setService"
+        "^1.0.0": "setService"
       }
     }
   },
