@@ -15,7 +15,7 @@ class PropertyProvider extends AbstractProvider
      * @inheritdoc
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
-        value = @service.getClassMember(editor, bufferPosition, name)
+        value = @service.getClassMemberAt(editor, bufferPosition, name)
 
         return unless value
 
