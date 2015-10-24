@@ -24,8 +24,7 @@ class AbstractProvider
      *
      * @param {mixed} service
     ###
-    activate: (service) ->
-        @service = service
+    activate: (@service) ->
         @subAtom = new SubAtom
 
         atom.workspace.observeTextEditors (editor) =>
