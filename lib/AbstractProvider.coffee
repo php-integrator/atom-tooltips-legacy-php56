@@ -60,7 +60,6 @@ class AbstractProvider
      * Deactives the provider.
     ###
     deactivate: () ->
-        document.removeChild(@popover)
         @subAtom.dispose()
         @removePopover()
 

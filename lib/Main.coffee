@@ -50,5 +50,4 @@ module.exports =
     setService: (service) ->
         @activateProviders(service)
 
-        # TODO: Handle and test package deactivation.
-        return new Disposable -> deactivateProviders()
+        return new Disposable => @deactivateProviders()
