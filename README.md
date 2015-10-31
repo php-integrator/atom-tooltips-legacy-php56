@@ -2,7 +2,9 @@
 
 ![Screenshot](http://ipfs.pics/ipfs/QmPx5Gca8Xf7LgN6MeD5cNG7Ne19tDybh1JTTdbdK2a3Hf)
 
-This package provides tooltips for your PHP source code using [PHP Integrator](https://github.com/Gert-dev/php-integrator-base). Note that the [php-integrator-base](https://github.com/Gert-dev/php-integrator-base) package is required and needs to be set up correctly for this package to function correctly.
+This package provides tooltips for your PHP source code using [PHP Integrator](https://github.com/Gert-dev/php-integrator-base).
+
+**Note that the [php-integrator-base](https://github.com/Gert-dev/php-integrator-base) package is required and needs to be set up correctly for this package to function correctly.**
 
 What is included?
   * Tooltips showing documentation for class, interface and trait names.
