@@ -9,7 +9,7 @@ class MethodProvider extends AbstractProvider
     ###*
      * @inheritdoc
     ###
-    hoverEventSelectors: '.function-call'
+    hoverEventSelectors: '.function-call.object, .function-call.static'
 
     ###*
      * @inheritdoc
