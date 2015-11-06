@@ -1,2 +1,7 @@
-## 0.0.1
+## 0.2.0
+* Tooltips are now displayed for global functions. `[1]`
+
+`[1]` Note that the built-in PHP functions don't have documentation that can be retrieved via reflection, so this only applies to user defined functions at the moment.
+
+## 0.1.0
 * Initial release.
