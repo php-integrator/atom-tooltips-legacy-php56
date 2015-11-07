@@ -18,16 +18,16 @@ module.exports =
             returnType = value.args.return.type
 
         if value.isPublic
-            accessModifier = 'public'
+            accessModifier = 'public '
 
         else if value.isProtected
-            accessModifier = 'protected'
+            accessModifier = 'protected '
 
-        else
-            accessModifier = 'private'
+        else if value.isPrivate
+            accessModifier = 'private '
 
         description += "<p><div>"
-        description += accessModifier + ' ' + returnType + ' <strong>' + name + '</strong>' + '('
+        description += accessModifier + returnType + ' <strong>' + value.name + '</strong>' + '('
 
         if value.args.parameters.length > 0
             description += value.args.parameters.join(', ');
