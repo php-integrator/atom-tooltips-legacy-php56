@@ -16,7 +16,11 @@ class MethodProvider extends AbstractProvider
      * @inheritdoc
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
-        value = @service.getClassMemberAt(editor, bufferPosition, name)
+        try
+            value = @service.getClassMemberAt(editor, bufferPosition, name)
+
+        catch error
+            return
 
         return unless value
 
