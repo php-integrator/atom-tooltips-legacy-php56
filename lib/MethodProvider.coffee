@@ -20,7 +20,7 @@ class MethodProvider extends AbstractProvider
             value = @service.getClassMemberAt(editor, bufferPosition, name)
 
         catch error
-            return
+            return null
 
         return unless value
 

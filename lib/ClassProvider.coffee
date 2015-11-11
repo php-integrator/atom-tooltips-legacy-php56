@@ -19,7 +19,11 @@ class ClassProvider extends AbstractProvider
     getTooltipForWord: (editor, bufferPosition, name) ->
         fullClassName = @service.determineFullClassName(editor, name)
 
-        classInfo = @service.getClassInfo(fullClassName)
+        try
+            classInfo = @service.getClassInfo(fullClassName)
+
+        catch
+             return null
 
         return unless classInfo and classInfo.wasFound
 
