@@ -14,8 +14,8 @@ module.exports =
         accessModifier = ''
         returnType = ''
 
-        if value.args.return?.type
-            returnType = value.args.return.type
+        if value.return?.type
+            returnType = value.return.type
 
         if value.isPublic
             accessModifier = 'public '
@@ -29,16 +29,16 @@ module.exports =
         description += "<p><div>"
         description += accessModifier + returnType + ' <strong>' + value.name + '</strong>' + '('
 
-        if value.args.parameters.length > 0
-            description += value.args.parameters.join(', ');
+        if value.parameters.length > 0
+            description += value.parameters.join(', ');
 
-        if value.args.optionals.length > 0
+        if value.optionals.length > 0
             description += '['
 
-            if value.args.parameters.length > 0
+            if value.parameters.length > 0
                 description += ', '
 
-            description += value.args.optionals.join(', ')
+            description += value.optionals.join(', ')
             description += ']'
 
         description += ')'
@@ -46,25 +46,25 @@ module.exports =
 
         # Show the summary (short description).
         description += '<div>'
-        description +=     (if value.args.descriptions.short then value.args.descriptions.short else '(No documentation available)')
+        description +=     (if value.descriptions.short then value.descriptions.short else '(No documentation available)')
         description += '</div>'
 
         # Show the (long) description.
-        if value.args.descriptions.long?.length > 0
+        if value.descriptions.long?.length > 0
             description += '<div class="section">'
             description +=     "<h4>Description</h4>"
-            description +=     "<div>" + value.args.descriptions.long + "</div>"
+            description +=     "<div>" + value.descriptions.long + "</div>"
             description += "</div>"
 
         # Show the parameters the method has.
         parametersDescription = ""
 
-        for param,info of value.args.docParameters
+        for param,info of value.docParameters
             parametersDescription += "<tr>"
 
             parametersDescription += "<td>•&nbsp;<strong>"
 
-            if param in value.args.optionals
+            if param in value.optionals
                 parametersDescription += "[" + param + "]"
 
             else
@@ -83,11 +83,11 @@ module.exports =
             description +=     "<div><table>" + parametersDescription + "</table></div>"
             description += "</div>"
 
-        if value.args.return?.type
-            returnValue = '<strong>' + value.args.return.type + '</strong>'
+        if value.return?.type
+            returnValue = '<strong>' + value.return.type + '</strong>'
 
-            if value.args.return.description
-                returnValue += ' ' + value.args.return.description
+            if value.return.description
+                returnValue += ' ' + value.return.description
 
             description += '<div class="section">'
             description +=     "<h4>Returns</h4>"
@@ -97,7 +97,7 @@ module.exports =
         # Show an overview of the exceptions the method can throw.
         throwsDescription = ""
 
-        for exceptionType,thrownWhenDescription of value.args.throws
+        for exceptionType,thrownWhenDescription of value.throws
             throwsDescription += "<div>"
             throwsDescription += "• <strong>" + exceptionType + "</strong>"
 
