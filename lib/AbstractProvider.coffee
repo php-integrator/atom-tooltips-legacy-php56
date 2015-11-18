@@ -25,10 +25,32 @@ class AbstractProvider
      * @param {mixed} service
     ###
     activate: (@service) ->
+        dependentPackage = 'language-php'
+
+        # It could be that the dependent package is already active, in that case we can continue immediately. If not,
+        # we'll need to wait for the listener to be invoked
+        if atom.packages.isPackageActive(dependentPackage)
+            @doActualInitialization()
+
+        atom.packages.onDidActivatePackage (packageData) =>
+            return if packageData.name != dependentPackage
+
+            @doActualInitialization()
+
+        atom.packages.onDidDeactivatePackage (packageData) =>
+            return if packageData.name != dependentPackage
+
+            @deactivate()
+
+    ###*
+     * Does the actual initialization.
+    ###
+    doActualInitialization: () ->
         @subAtom = new SubAtom
 
         atom.workspace.observeTextEditors (editor) =>
-            @registerEvents(editor)
+            if /text.html.php$/.test(editor.getGrammar().scopeName)
+                @registerEvents(editor)
 
         # When you go back to only have one pane the events are lost, so need to re-register.
         atom.workspace.onDidDestroyPane (pane) =>
@@ -53,7 +75,8 @@ class AbstractProvider
     registerEventsForPane: (pane) ->
         for paneItem in pane.items
             if paneItem instanceof TextEditor
-                @registerEvents(paneItem)
+                if /text.html.php$/.test(paneItem.getGrammar().scopeName)
+                    @registerEvents(paneItem)
 
     ###*
      * Deactives the provider.
@@ -68,42 +91,41 @@ class AbstractProvider
      * @param {TextEditor} editor TextEditor to register events to.
     ###
     registerEvents: (editor) ->
-        if editor.getGrammar().scopeName.match /text.html.php$/
-            textEditorElement = atom.views.getView(editor)
-            scrollViewElement = $(textEditorElement.shadowRoot).find('.scroll-view')
+        textEditorElement = atom.views.getView(editor)
+        scrollViewElement = $(textEditorElement.shadowRoot).find('.scroll-view')
 
-            @subAtom.add scrollViewElement, 'mouseover', @hoverEventSelectors, (event) =>
-                selector = @getSelectorFromEvent(event)
+        @subAtom.add scrollViewElement, 'mouseover', @hoverEventSelectors, (event) =>
+            selector = @getSelectorFromEvent(event)
 
-                if selector == null
-                    return
+            if selector == null
+                return
 
-                editorViewComponent = atom.views.getView(editor).component
+            editorViewComponent = atom.views.getView(editor).component
 
-                # Ticket #140 - In rare cases the component is null.
-                if editorViewComponent
-                    cursorPosition = editorViewComponent.screenPositionForMouseEvent(event)
+            # Ticket #140 - In rare cases the component is null.
+            if editorViewComponent
+                cursorPosition = editorViewComponent.screenPositionForMouseEvent(event)
 
-                    @removePopover()
-                    @showPopoverFor(editor, selector, cursorPosition)
-
-            @subAtom.add scrollViewElement, 'mouseout', @hoverEventSelectors, (event) =>
                 @removePopover()
+                @showPopoverFor(editor, selector, cursorPosition)
 
-            # Ticket #107 - Mouseout isn't generated until the mouse moves, even when scrolling (with the keyboard or
-            # mouse). If the element goes out of the view in the meantime, its HTML element disappears, never removing
-            # it.
-            editor.onDidDestroy () =>
-                @removePopover()
+        @subAtom.add scrollViewElement, 'mouseout', @hoverEventSelectors, (event) =>
+            @removePopover()
 
-            editor.onDidStopChanging () =>
-                @removePopover()
+        # Ticket #107 - Mouseout isn't generated until the mouse moves, even when scrolling (with the keyboard or
+        # mouse). If the element goes out of the view in the meantime, its HTML element disappears, never removing
+        # it.
+        editor.onDidDestroy () =>
+            @removePopover()
 
-            $(textEditorElement.shadowRoot).find('.horizontal-scrollbar').on 'scroll', () =>
-                @removePopover()
+        editor.onDidStopChanging () =>
+            @removePopover()
 
-            $(textEditorElement.shadowRoot).find('.vertical-scrollbar').on 'scroll', () =>
-                @removePopover()
+        $(textEditorElement.shadowRoot).find('.horizontal-scrollbar').on 'scroll', () =>
+            @removePopover()
+
+        $(textEditorElement.shadowRoot).find('.vertical-scrollbar').on 'scroll', () =>
+            @removePopover()
 
     ###*
      * Shows a popover containing the documentation of the specified element located at the specified location.
