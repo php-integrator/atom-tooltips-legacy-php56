@@ -1,3 +1,6 @@
+## 0.2.1
+* Wait for the language-php package to become activated on startup.
+
 ## 0.2.0
 * Tooltips are now displayed for global functions. `[1]`
 
