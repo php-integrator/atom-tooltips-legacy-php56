@@ -1,4 +1,4 @@
-## 0.2.2
+## 0.2.2 (base 0.4.0)
 * Fixed error `Cannot read property 'length' of undefined` being thrown sometimes when there was a property and a method with the same name.
 
 ## 0.2.1
