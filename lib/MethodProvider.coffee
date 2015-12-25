@@ -17,7 +17,7 @@ class MethodProvider extends AbstractProvider
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
         try
-            value = @service.getClassMemberAt(editor, bufferPosition, name)
+            value = @service.getClassMethodAt(editor, bufferPosition, name)
 
         catch error
             return null

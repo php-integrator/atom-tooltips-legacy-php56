@@ -1,3 +1,6 @@
+## 0.2.2
+* Fixed error `Cannot read property 'length' of undefined` being thrown sometimes when there was a property and a method with the same name.
+
 ## 0.2.1
 * Wait for the language-php package to become activated on startup.
 

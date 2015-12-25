@@ -16,7 +16,7 @@ class PropertyProvider extends AbstractProvider
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
         try
-            value = @service.getClassMemberAt(editor, bufferPosition, name)
+            value = @service.getClassPropertyAt(editor, bufferPosition, name)
 
         catch error
             return null
