@@ -25,8 +25,6 @@ class ClassProvider extends AbstractProvider
         catch
              return null
 
-        return unless classInfo and classInfo.wasFound
-
         type = ''
 
         if classInfo.isClass
