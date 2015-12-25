@@ -27,13 +27,13 @@ class ClassProvider extends AbstractProvider
 
         type = ''
 
-        if classInfo.isClass
+        if classInfo.type == 'class'
             type = (if classInfo.isAbstract then 'abstract ' else '') + 'class'
 
-        else if classInfo.isTrait
+        else if classInfo.type == 'trait'
             type = 'trait'
 
-        else if classInfo.isInterface
+        else if classInfo.type == 'interface'
             type = 'interface'
 
         # Create a useful description to show in the tooltip.
