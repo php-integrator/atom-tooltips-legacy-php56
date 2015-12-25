@@ -40,7 +40,7 @@ class ClassProvider extends AbstractProvider
         description = ''
 
         description += "<p><div>"
-        description +=     type + ' ' + '<strong>' + classInfo.shortName + '</strong> &mdash; ' + classInfo.class
+        description +=     type + ' ' + '<strong>' + classInfo.shortName + '</strong> &mdash; ' + classInfo.name
         description += '</div></p>'
 
         # Show the summary (short description).
