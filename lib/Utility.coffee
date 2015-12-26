@@ -27,29 +27,23 @@ module.exports =
             accessModifier = 'private '
 
         description += "<p><div>"
+
+        # Show the signature.
         description += accessModifier + returnType + ' <strong>' + value.name + '</strong>' + '('
 
         isFirst = true
+        isInOptionalList = false
 
-        for param in value.parameters
-            if param.isOptional
-                description += '['
-
-            if not isFirst
-                description += ', '
-
-            if param.isReference
-                description += '&'
-
+        for param, index in value.parameters
+            description += '['  if param.isOptional and not isInOptionalList
+            description += ', ' if not isFirst
+            description += '&'   if param.isReference
             description += '$' + param.name
-
-            if param.isVariadic
-                description += '...'
-
-            if param.isOptional
-                description += ']'
+            description += '...' if param.isVariadic
+            description += ']'   if param.isOptional and index == (value.parameters.length - 1)
 
             isFirst = false
+            isInOptionalList = param.isOptional
 
         description += ')'
         description += '</div></p>'
