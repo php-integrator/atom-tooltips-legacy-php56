@@ -29,17 +29,27 @@ module.exports =
         description += "<p><div>"
         description += accessModifier + returnType + ' <strong>' + value.name + '</strong>' + '('
 
-        if value.parameters.length > 0
-            description += value.parameters.join(', ');
+        isFirst = true
 
-        if value.optionals.length > 0
-            description += '['
+        for param in value.parameters
+            if param.isOptional
+                description += '['
 
-            if value.parameters.length > 0
+            if not isFirst
                 description += ', '
 
-            description += value.optionals.join(', ')
-            description += ']'
+            if param.isReference
+                description += '&'
+
+            description += '$' + param.name
+
+            if param.isVariadic
+                description += '...'
+
+            if param.isOptional
+                description += ']'
+
+            isFirst = false
 
         description += ')'
         description += '</div></p>'
@@ -59,21 +69,29 @@ module.exports =
         # Show the parameters the method has.
         parametersDescription = ""
 
-        for param,info of value.docParameters
+        for param in value.parameters
             parametersDescription += "<tr>"
 
             parametersDescription += "<td>•&nbsp;<strong>"
 
-            if param in value.optionals
-                parametersDescription += "[" + param + "]"
+            if param.isOptional
+                parametersDescription += '['
 
-            else
-                parametersDescription += param
+            if param.isReference
+                parametersDescription += '&'
+
+            parametersDescription += '$' + param.name
+
+            if param.isVariadic
+                parametersDescription += '...' + param.name
+
+            if param.isOptional
+                parametersDescription += ']'
 
             parametersDescription += "</strong></td>"
 
-            parametersDescription += "<td>" + (if info.type then info.type else '&nbsp;') + '</td>'
-            parametersDescription += "<td>" + (if info.description then info.description else '&nbsp;') + '</td>'
+            parametersDescription += "<td>" + (if param.type then param.type else '&nbsp;') + '</td>'
+            parametersDescription += "<td>" + (if param.description then param.description else '&nbsp;') + '</td>'
 
             parametersDescription += "</tr>"
 
