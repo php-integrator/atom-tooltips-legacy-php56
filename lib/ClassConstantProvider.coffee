@@ -4,24 +4,24 @@ AbstractProvider = require './AbstractProvider'
 module.exports =
 
 ##*
-# Provides tooltips for global constants.
+# Provides tooltips for member constants.
 ##
-class ClassProvider extends AbstractProvider
+class ClassConstantProvider extends AbstractProvider
     ###*
      * @inheritdoc
     ###
-    hoverEventSelectors: '.function-call.object, .function-call.static'
+    hoverEventSelectors: '.constant.other.class'
 
     ###*
      * @inheritdoc
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
         try
-            value = @service.getClassMethodAt(editor, bufferPosition, name)
+            value = @service.getClassConstantAt(editor, bufferPosition, name)
 
         catch error
             return null
 
         return unless value
 
-        return Utility.buildTooltipForFunction(value)
+        return Utility.buildTooltipForConstant(value)
