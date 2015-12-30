@@ -74,10 +74,10 @@ module.exports =
             if param.isReference
                 parametersDescription += '&'
 
-            parametersDescription += '$' + param.name
-
             if param.isVariadic
-                parametersDescription += '...' + param.name
+                parametersDescription += '...'
+
+            parametersDescription += '$' + param.name
 
             if param.isOptional
                 parametersDescription += ']'
