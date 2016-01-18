@@ -90,7 +90,7 @@ class AbstractProvider
     ###
     registerEvents: (editor) ->
         textEditorElement = atom.views.getView(editor)
-        scrollViewElement = $(textEditorElement.shadowRoot).find('.scroll-view')
+        scrollViewElement = textEditorElement.shadowRoot.querySelector('.scroll-view')
 
         @subAtom.add scrollViewElement, 'mouseover', @hoverEventSelectors, (event) =>
             selector = @getSelectorFromEvent(event)
@@ -110,6 +110,12 @@ class AbstractProvider
         @subAtom.add scrollViewElement, 'mouseout', @hoverEventSelectors, (event) =>
             @removePopover()
 
+        @subAtom.add textEditorElement.shadowRoot.querySelector('.horizontal-scrollbar'), 'scroll', (event) =>
+            @removePopover()
+
+        @subAtom.add textEditorElement.shadowRoot.querySelector('.vertical-scrollbar'), 'scroll', (event) =>
+            @removePopover()
+
         # Ticket #107 - Mouseout isn't generated until the mouse moves, even when scrolling (with the keyboard or
         # mouse). If the element goes out of the view in the meantime, its HTML element disappears, never removing
         # it.
@@ -117,12 +123,6 @@ class AbstractProvider
             @removePopover()
 
         editor.onDidStopChanging () =>
-            @removePopover()
-
-        $(textEditorElement.shadowRoot).find('.horizontal-scrollbar').on 'scroll', () =>
-            @removePopover()
-
-        $(textEditorElement.shadowRoot).find('.vertical-scrollbar').on 'scroll', () =>
             @removePopover()
 
     ###*
