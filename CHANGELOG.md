@@ -1,3 +1,6 @@
+## 0.3.1 (base 0.5.0)
+* Updated to work with the most recent service from the base package.
+
 ## 0.3.0 (base 0.4.0)
 * Added tooltips for class and global constants.
 * Fixed error `Cannot read property 'length' of undefined` being thrown sometimes when there was a property and a method with the same name.
