@@ -1,3 +1,7 @@
+## 0.3.2 (base 0.6.0)
+* Minor bugfixes.
+* Updated to work with the most recent service from the base package.
+
 ## 0.3.1 (base 0.5.0)
 * Updated to work with the most recent service from the base package.
 
