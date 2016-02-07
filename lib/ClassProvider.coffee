@@ -11,13 +11,13 @@ class ClassProvider extends AbstractProvider
     ###*
      * @inheritdoc
     ###
-    hoverEventSelectors: '.entity.inherited-class, .support.namespace, .support.class, .comment-clickable .region'
+    hoverEventSelectors: '.entity.inherited-class, .support.namespace, .support.class'
 
     ###*
      * @inheritdoc
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
-        fullClassName = @service.determineFullClassName(editor, name)
+        fullClassName = @service.resolveType(editor, name)
 
         try
             classInfo = @service.getClassInfo(fullClassName)
