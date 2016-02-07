@@ -129,17 +129,17 @@ class AbstractProvider
      * Shows a popover containing the documentation of the specified element located at the specified location.
      *
      * @param {TextEditor} editor         TextEditor containing the elemment.
-     * @param {string}     element        The element to search for.
+     * @param {string}     selector       The selector to search for.
      * @param {Point}      bufferPosition The cursor location the element is at.
      * @param {int}        delay          How long to wait before the popover shows up.
      * @param {int}        fadeInTime     The amount of time to take to fade in the tooltip.
     ###
-    showPopoverFor: (editor, element, bufferPosition, delay = 500, fadeInTime = 100) ->
-        name = $(element).text()
+    showPopoverFor: (editor, selector, bufferPosition, delay = 500, fadeInTime = 100) ->
+        name = $(selector).text()
         tooltipText = @getTooltipForWord(editor, bufferPosition, name)
 
         if tooltipText?.length > 0
-            popoverElement = @getPopoverElementFromSelector(element)
+            popoverElement = @getPopoverElementFromSelector(selector)
 
             @attachedPopover = @service.createAttachedPopover(popoverElement)
             @attachedPopover.setText('<div style="margin-top: -1em;">' + tooltipText + '</div>')
