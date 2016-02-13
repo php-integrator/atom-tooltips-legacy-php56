@@ -17,7 +17,7 @@ class ClassProvider extends AbstractProvider
      * @inheritdoc
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
-        fullClassName = @service.resolveType(editor, name)
+        fullClassName = @service.resolveTypeAt(editor, bufferPosition, name)
 
         try
             classInfo = @service.getClassInfo(fullClassName)
