@@ -1,4 +1,8 @@
 # php-integrator-tooltips
+<p align="right">
+:coffee:
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YKTNLZCRHMRTJ">Send me some coffee beans</a>
+</p>
 
 ![Screenshot](http://ipfs.pics/ipfs/QmPx5Gca8Xf7LgN6MeD5cNG7Ne19tDybh1JTTdbdK2a3Hf)
 
@@ -11,7 +15,5 @@ What is included?
   * Tooltips showing documentation for class, interface and trait names.
   * Tooltips showing documentation for class, interface and trait members.
   * Tooltips showing documentation for use statements (if the referenced item is an actual structure).
-
-Regarding donations: they were not my primary intention when releasing this project as open source, but I do accept them and am very grateful for any donation you may give. A link is provided on the readme of the [php-integrator-base](https://github.com/Gert-dev/php-integrator-base) package.
 
 ![GPLv3 Logo](http://gplv3.fsf.org/gplv3-127x51.png)
