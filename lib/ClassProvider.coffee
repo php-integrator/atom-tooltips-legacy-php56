@@ -20,12 +20,20 @@ class ClassProvider extends AbstractProvider
         scopeChain = editor.scopeDescriptorForBufferPosition(bufferPosition).getScopeChain()
 
         try
-            # Don't attempt to resolve class names in use statements.
-            if scopeChain.indexOf('.support.other.namespace.use') == -1
-                className = @service.resolveTypeAt(editor, bufferPosition, name)
+            className = name
+            doResolve = true
 
-            else
-                className = name
+            # Don't attempt to resolve class names in use statements.
+            if scopeChain.indexOf('.support.other.namespace.use') != -1
+                currentClassName = @service.determineCurrentClassName(editor, bufferPosition)
+
+                # Scope descriptors for trait use statements and actual "import" use statements are the same, so we
+                # have no choice but to use class information for this.
+                if not currentClassName?
+                    doResolve = false
+
+            if doResolve
+                className = @service.resolveTypeAt(editor, bufferPosition, className)
 
             classInfo = @service.getClassInfo(className)
 
