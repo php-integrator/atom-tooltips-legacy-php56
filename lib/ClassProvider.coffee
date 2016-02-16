@@ -17,12 +17,20 @@ class ClassProvider extends AbstractProvider
      * @inheritdoc
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
-        try
-            fullClassName = @service.resolveTypeAt(editor, bufferPosition, name)
-            classInfo = @service.getClassInfo(fullClassName)
+        scopeChain = editor.scopeDescriptorForBufferPosition(bufferPosition).getScopeChain()
 
-        catch
-             return null
+        try
+            # Don't attempt to resolve class names in use statements.
+            if scopeChain.indexOf('.support.other.namespace.use') == -1
+                className = @service.resolveTypeAt(editor, bufferPosition, name)
+
+            else
+                className = name
+
+            classInfo = @service.getClassInfo(className)
+
+        catch error
+            return null
 
         type = ''
 
