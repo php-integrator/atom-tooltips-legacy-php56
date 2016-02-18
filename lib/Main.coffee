@@ -19,18 +19,20 @@ module.exports =
      * Activates the providers using the specified service.
     ###
     activateProviders: (service) ->
-        ClassProvider         = require './ClassProvider'
-        MethodProvider        = require './MethodProvider'
-        PropertyProvider      = require './PropertyProvider'
-        FunctionProvider      = require './FunctionProvider'
-        ConstantProvider      = require './ConstantProvider'
-        ClassConstantProvider = require './ClassConstantProvider'
+        ClassProvider              = require './ClassProvider'
+        MethodProvider             = require './MethodProvider'
+        PropertyProvider           = require './PropertyProvider'
+        FunctionProvider           = require './FunctionProvider'
+        ConstantProvider           = require './ConstantProvider'
+        ClassConstantProvider      = require './ClassConstantProvider'
+        FunctionDefinitionProvider = require './FunctionDefinitionProvider'
 
         @providers = []
         @providers.push new ClassProvider()
         @providers.push new MethodProvider()
         @providers.push new FunctionProvider()
         @providers.push new PropertyProvider()
+        @providers.push new FunctionDefinitionProvider()
 
         # The selector from the constant provider will still match class constants due to the way SubAtom does its
         # class selector checks. However, the reverse doesn't hold so if we add the class constant provider first,

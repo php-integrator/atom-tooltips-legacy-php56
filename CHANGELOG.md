@@ -1,6 +1,6 @@
-## 0.3.2 (base 0.6.0)
+## 0.4.0 (base 0.6.0)
 * Minor bugfixes.
-* Updated to work with the most recent service from the base package.
+* Tooltips will now show up when hovering over function and method definitions as well. This is useful when you are inheriting documentation, so you can view what is actually inherited.
 
 ## 0.3.1 (base 0.5.0)
 * Updated to work with the most recent service from the base package.
