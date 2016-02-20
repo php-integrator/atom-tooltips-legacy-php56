@@ -34,16 +34,17 @@ module.exports =
         isFirst = true
         isInOptionalList = false
 
-        for param, index in value.parameters
-            description += '['  if param.isOptional and not isInOptionalList
-            description += ', ' if not isFirst
-            description += '&'   if param.isReference
-            description += '$' + param.name
-            description += '...' if param.isVariadic
-            description += ']'   if param.isOptional and index == (value.parameters.length - 1)
-
-            isFirst = false
-            isInOptionalList = param.isOptional
+        if value.parameters?
+            for param, index in value.parameters
+                description += '['  if param.isOptional and not isInOptionalList
+                description += ', ' if not isFirst
+                description += '&'   if param.isReference
+                description += '$' + param.name
+                description += '...' if param.isVariadic
+                description += ']'   if param.isOptional and index == (value.parameters.length - 1)
+    
+                isFirst = false
+                isInOptionalList = param.isOptional
 
         description += ')'
         description += '</div></p>'
@@ -63,31 +64,32 @@ module.exports =
         # Show the parameters the method has.
         parametersDescription = ""
 
-        for param in value.parameters
-            parametersDescription += "<tr>"
-
-            parametersDescription += "<td>•&nbsp;<strong>"
-
-            if param.isOptional
-                parametersDescription += '['
-
-            if param.isReference
-                parametersDescription += '&'
-
-            if param.isVariadic
-                parametersDescription += '...'
-
-            parametersDescription += '$' + param.name
-
-            if param.isOptional
-                parametersDescription += ']'
-
-            parametersDescription += "</strong></td>"
-
-            parametersDescription += "<td>" + (if param.type then param.type else '&nbsp;') + '</td>'
-            parametersDescription += "<td>" + (if param.description then param.description else '&nbsp;') + '</td>'
-
-            parametersDescription += "</tr>"
+        if value.parameters?
+            for param in value.parameters
+                parametersDescription += "<tr>"
+    
+                parametersDescription += "<td>•&nbsp;<strong>"
+    
+                if param.isOptional
+                    parametersDescription += '['
+    
+                if param.isReference
+                    parametersDescription += '&'
+    
+                if param.isVariadic
+                    parametersDescription += '...'
+    
+                parametersDescription += '$' + param.name
+    
+                if param.isOptional
+                    parametersDescription += ']'
+    
+                parametersDescription += "</strong></td>"
+    
+                parametersDescription += "<td>" + (if param.type then param.type else '&nbsp;') + '</td>'
+                parametersDescription += "<td>" + (if param.description then param.description else '&nbsp;') + '</td>'
+    
+                parametersDescription += "</tr>"
 
         if parametersDescription.length > 0
             description += '<div class="section">'
