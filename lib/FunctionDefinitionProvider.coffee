@@ -16,7 +16,11 @@ class FunctionDefinitionProvider extends AbstractProvider
      * @inheritdoc
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
-        currentClassName = @service.determineCurrentClassName(editor, bufferPosition)
+        try
+            currentClassName = @service.determineCurrentClassName(editor, bufferPosition)
+
+        catch error
+            return null
 
         value = null
 

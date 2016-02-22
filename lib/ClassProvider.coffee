@@ -25,7 +25,11 @@ class ClassProvider extends AbstractProvider
 
             # Don't attempt to resolve class names in use statements.
             if scopeChain.indexOf('.support.other.namespace.use') != -1
-                currentClassName = @service.determineCurrentClassName(editor, bufferPosition)
+                try
+                    currentClassName = @service.determineCurrentClassName(editor, bufferPosition)
+
+                catch error
+                    return null
 
                 # Scope descriptors for trait use statements and actual "import" use statements are the same, so we
                 # have no choice but to use class information for this.
