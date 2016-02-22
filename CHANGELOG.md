@@ -1,3 +1,6 @@
+## 0.4.1
+* Catch exceptions properly.
+
 ## 0.4.0 (base 0.6.0)
 * Minor bugfixes.
 * Tooltips will now show up when hovering over function and method definitions as well. This is useful when you are inheriting documentation, so you can view what is actually inherited.
