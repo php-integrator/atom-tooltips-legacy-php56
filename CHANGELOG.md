@@ -1,3 +1,6 @@
+## 0.4.2
+* Fixed the tooltip not showing when hovering over magic methods such as `__construct`.
+
 ## 0.4.1
 * Catch exceptions properly.
 
