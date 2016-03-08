@@ -17,27 +17,21 @@ class FunctionDefinitionProvider extends AbstractProvider
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
         return new Promise (resolve, reject) =>
-            try
-                currentClassName = @service.determineCurrentClassName(editor, bufferPosition)
+            return @service.determineCurrentClassName(editor, bufferPosition, true).then (currentClassName) =>
+                if currentClassName?
+                    return @service.getClassInfo(currentClassName, true).then (classInfo) =>
+                        if name of classInfo.methods
+                            tooltipText = Utility.buildTooltipForFunction(classInfo.methods[name])
 
-            catch error
-                reject()
-                return
+                            resolve(tooltipText)
+                            return
 
-            if currentClassName?
-                return @service.getClassInfo(currentClassName, true).then (classInfo) =>
-                    if name of classInfo.methods
-                        tooltipText = Utility.buildTooltipForFunction(classInfo.methods[name])
+                        reject()
 
-                        resolve(tooltipText)
-                        return
+                else
+                    return @service.getGlobalFunctions(true).then (functions) =>
+                        if functions and name of functions
+                            resolve(Utility.buildTooltipForFunction(functions[name]))
+                            return
 
-                    reject()
-
-            else
-                return @service.getGlobalFunctions(true).then (functions) =>
-                    if functions and name of functions
-                        resolve(Utility.buildTooltipForFunction(functions[name]))
-                        return
-
-                    reject()
+                        reject()
