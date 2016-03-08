@@ -10,7 +10,7 @@ class FunctionDefinitionProvider extends AbstractProvider
     ###*
      * @inheritdoc
     ###
-    hoverEventSelectors: '.entity.name.function'
+    hoverEventSelectors: '.entity.name.function, .support.function.magic'
 
     ###*
      * @inheritdoc
