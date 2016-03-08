@@ -20,10 +20,10 @@ class ClassProvider extends AbstractProvider
         return new Promise (resolve, reject) =>
             scopeChain = editor.scopeDescriptorForBufferPosition(bufferPosition).getScopeChain()
 
-            try
-                className = name
-                doResolve = true
+            className = name
+            doResolve = true
 
+            try
                 # Don't attempt to resolve class names in use statements.
                 if scopeChain.indexOf('.support.other.namespace.use') != -1
                     try
@@ -41,43 +41,42 @@ class ClassProvider extends AbstractProvider
                 if doResolve
                     className = @service.resolveTypeAt(editor, bufferPosition, className)
 
-                classInfo = @service.getClassInfo(className)
-
             catch error
                 reject()
                 return
 
-            type = ''
+            return @service.getClassInfo(className, true).then (classInfo) =>
+                type = ''
 
-            if classInfo.type == 'class'
-                type = (if classInfo.isAbstract then 'abstract ' else '') + 'class'
+                if classInfo.type == 'class'
+                    type = (if classInfo.isAbstract then 'abstract ' else '') + 'class'
 
-            else if classInfo.type == 'trait'
-                type = 'trait'
+                else if classInfo.type == 'trait'
+                    type = 'trait'
 
-            else if classInfo.type == 'interface'
-                type = 'interface'
+                else if classInfo.type == 'interface'
+                    type = 'interface'
 
-            # Create a useful description to show in the tooltip.
-            description = ''
+                # Create a useful description to show in the tooltip.
+                description = ''
 
-            description += "<p><div>"
-            description +=     type + ' ' + '<strong>' + classInfo.shortName + '</strong> &mdash; ' + classInfo.name
-            description += '</div></p>'
+                description += "<p><div>"
+                description +=     type + ' ' + '<strong>' + classInfo.shortName + '</strong> &mdash; ' + classInfo.name
+                description += '</div></p>'
 
-            # Show the summary (short description).
-            description += '<div>'
-            description +=     (if classInfo.descriptions.short then classInfo.descriptions.short else '(No documentation available)')
-            description += '</div>'
+                # Show the summary (short description).
+                description += '<div>'
+                description +=     (if classInfo.descriptions.short then classInfo.descriptions.short else '(No documentation available)')
+                description += '</div>'
 
-            # Show the (long) description.
-            if classInfo.descriptions.long?.length > 0
-                description += '<div class="section">'
-                description +=     "<h4>Description</h4>"
-                description +=     "<div>" + classInfo.descriptions.long + "</div>"
-                description += "</div>"
+                # Show the (long) description.
+                if classInfo.descriptions.long?.length > 0
+                    description += '<div class="section">'
+                    description +=     "<h4>Description</h4>"
+                    description +=     "<div>" + classInfo.descriptions.long + "</div>"
+                    description += "</div>"
 
-            resolve(description)
+                resolve(description)
 
     ###*
      * @inheritdoc
