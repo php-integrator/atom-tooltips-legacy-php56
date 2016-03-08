@@ -16,12 +16,16 @@ class ClassConstantProvider extends AbstractProvider
      * @inheritdoc
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
-        try
-            value = @service.getClassConstantAt(editor, bufferPosition, name)
+        return new Promise (resolve, reject) =>
+            try
+                value = @service.getClassConstantAt(editor, bufferPosition, name)
 
-        catch error
-            return null
+            catch error
+                reject()
+                return
 
-        return unless value
+            if not value?
+                reject()
+                return
 
-        return Utility.buildTooltipForConstant(value)
+            resolve(Utility.buildTooltipForConstant(value))

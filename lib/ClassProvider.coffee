@@ -17,64 +17,67 @@ class ClassProvider extends AbstractProvider
      * @inheritdoc
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
-        scopeChain = editor.scopeDescriptorForBufferPosition(bufferPosition).getScopeChain()
+        return new Promise (resolve, reject) =>
+            scopeChain = editor.scopeDescriptorForBufferPosition(bufferPosition).getScopeChain()
 
-        try
-            className = name
-            doResolve = true
+            try
+                className = name
+                doResolve = true
 
-            # Don't attempt to resolve class names in use statements.
-            if scopeChain.indexOf('.support.other.namespace.use') != -1
-                try
-                    currentClassName = @service.determineCurrentClassName(editor, bufferPosition)
+                # Don't attempt to resolve class names in use statements.
+                if scopeChain.indexOf('.support.other.namespace.use') != -1
+                    try
+                        currentClassName = @service.determineCurrentClassName(editor, bufferPosition)
 
-                catch error
-                    return null
+                    catch error
+                        reject()
+                        return
 
-                # Scope descriptors for trait use statements and actual "import" use statements are the same, so we
-                # have no choice but to use class information for this.
-                if not currentClassName?
-                    doResolve = false
+                    # Scope descriptors for trait use statements and actual "import" use statements are the same, so we
+                    # have no choice but to use class information for this.
+                    if not currentClassName?
+                        doResolve = false
 
-            if doResolve
-                className = @service.resolveTypeAt(editor, bufferPosition, className)
+                if doResolve
+                    className = @service.resolveTypeAt(editor, bufferPosition, className)
 
-            classInfo = @service.getClassInfo(className)
+                classInfo = @service.getClassInfo(className)
 
-        catch error
-            return null
+            catch error
+                reject()
+                return
 
-        type = ''
+            type = ''
 
-        if classInfo.type == 'class'
-            type = (if classInfo.isAbstract then 'abstract ' else '') + 'class'
+            if classInfo.type == 'class'
+                type = (if classInfo.isAbstract then 'abstract ' else '') + 'class'
 
-        else if classInfo.type == 'trait'
-            type = 'trait'
+            else if classInfo.type == 'trait'
+                type = 'trait'
 
-        else if classInfo.type == 'interface'
-            type = 'interface'
+            else if classInfo.type == 'interface'
+                type = 'interface'
 
-        # Create a useful description to show in the tooltip.
-        description = ''
+            # Create a useful description to show in the tooltip.
+            description = ''
 
-        description += "<p><div>"
-        description +=     type + ' ' + '<strong>' + classInfo.shortName + '</strong> &mdash; ' + classInfo.name
-        description += '</div></p>'
+            description += "<p><div>"
+            description +=     type + ' ' + '<strong>' + classInfo.shortName + '</strong> &mdash; ' + classInfo.name
+            description += '</div></p>'
 
-        # Show the summary (short description).
-        description += '<div>'
-        description +=     (if classInfo.descriptions.short then classInfo.descriptions.short else '(No documentation available)')
-        description += '</div>'
+            # Show the summary (short description).
+            description += '<div>'
+            description +=     (if classInfo.descriptions.short then classInfo.descriptions.short else '(No documentation available)')
+            description += '</div>'
 
-        # Show the (long) description.
-        if classInfo.descriptions.long?.length > 0
-            description += '<div class="section">'
-            description +=     "<h4>Description</h4>"
-            description +=     "<div>" + classInfo.descriptions.long + "</div>"
-            description += "</div>"
+            # Show the (long) description.
+            if classInfo.descriptions.long?.length > 0
+                description += '<div class="section">'
+                description +=     "<h4>Description</h4>"
+                description +=     "<div>" + classInfo.descriptions.long + "</div>"
+                description += "</div>"
 
-        return description
+            resolve(description)
 
     ###*
      * @inheritdoc

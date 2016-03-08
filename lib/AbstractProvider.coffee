@@ -136,14 +136,19 @@ class AbstractProvider
     ###
     showPopoverFor: (editor, selector, bufferPosition, delay = 500, fadeInTime = 100) ->
         name = $(selector).text()
-        tooltipText = @getTooltipForWord(editor, bufferPosition, name)
 
-        if tooltipText?.length > 0
-            popoverElement = @getPopoverElementFromSelector(selector)
+        successHandler = (tooltipText) =>
+            if tooltipText?.length > 0
+                popoverElement = @getPopoverElementFromSelector(selector)
 
-            @attachedPopover = @service.createAttachedPopover(popoverElement)
-            @attachedPopover.setText('<div style="margin-top: -1em;">' + tooltipText + '</div>')
-            @attachedPopover.showAfter(delay, fadeInTime)
+                @attachedPopover = @service.createAttachedPopover(popoverElement)
+                @attachedPopover.setText('<div style="margin-top: -1em;">' + tooltipText + '</div>')
+                @attachedPopover.showAfter(delay, fadeInTime)
+
+        failureHandler = () =>
+            return
+
+        @getTooltipForWord(editor, bufferPosition, name).then(successHandler, failureHandler)
 
     ###*
      * Removes the popover, if it is displayed.
@@ -159,6 +164,8 @@ class AbstractProvider
      * @param {TextEditor} editor         TextEditor to search for namespace of term.
      * @param {Point}      bufferPosition The cursor location the term is at.
      * @param {string}     name           The name of the element to retrieve the tooltip for.
+     *
+     * @return {Promise}
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
         throw new Error("This method is abstract and must be implemented!")

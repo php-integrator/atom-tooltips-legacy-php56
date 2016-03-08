@@ -16,12 +16,16 @@ class FunctionProvider extends AbstractProvider
      * @inheritdoc
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
-        try
-            functions = @service.getGlobalFunctions()
+        return new Promise (resolve, reject) =>
+            try
+                functions = @service.getGlobalFunctions()
 
-        catch
-             return null
+            catch
+                 reject()
+                 return
 
-        return unless functions and name of functions
+            if not functions or name not of functions
+                reject()
+                return
 
-        return Utility.buildTooltipForFunction(functions[name])
+            resolve(Utility.buildTooltipForFunction(functions[name]))

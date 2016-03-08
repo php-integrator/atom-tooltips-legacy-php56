@@ -16,8 +16,11 @@ class MethodProvider extends AbstractProvider
      * @inheritdoc
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
-        constants = @service.getGlobalConstants()
+        return new Promise (resolve, reject) =>
+            constants = @service.getGlobalConstants()
 
-        return unless constants and name of constants
+            if not constants or name not of constants
+                reject()
+                return
 
-        return Utility.buildTooltipForConstant(constants[name])
+            resolve(Utility.buildTooltipForConstant(constants[name]))
