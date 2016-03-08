@@ -24,5 +24,6 @@ class ClassConstantProvider extends AbstractProvider
                     tooltipText = Utility.buildTooltipForConstant(classInfo.constants[name])
 
                     resolve(tooltipText)
+                    return
 
                 reject()
