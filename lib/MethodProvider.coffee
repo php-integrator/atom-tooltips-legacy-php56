@@ -17,15 +17,13 @@ class ClassProvider extends AbstractProvider
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
         return new Promise (resolve, reject) =>
-            try
-                value = @service.getClassMethodAt(editor, bufferPosition, name)
+            className = @service.getResultingTypeAt(editor, bufferPosition, true)
 
-            catch error
+            return @service.getClassInfo(className, true).then (classInfo) =>
+                if name of classInfo.methods
+                    tooltipText = Utility.buildTooltipForFunction(classInfo.methods[name])
+
+                    resolve(tooltipText)
+                    return
+
                 reject()
-                return
-
-            if not value?
-                reject()
-                return
-
-            resolve(Utility.buildTooltipForFunction(value))
