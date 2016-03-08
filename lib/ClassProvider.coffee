@@ -20,63 +20,50 @@ class ClassProvider extends AbstractProvider
         return new Promise (resolve, reject) =>
             scopeChain = editor.scopeDescriptorForBufferPosition(bufferPosition).getScopeChain()
 
-            className = name
-            doResolve = true
-
-            try
-                # Don't attempt to resolve class names in use statements.
-                if scopeChain.indexOf('.support.other.namespace.use') != -1
+            return @service.determineCurrentClassName(editor, bufferPosition, true).then (currentClassName) =>
+                # Don't attempt to resolve class names in use statements. Note that scope descriptors for trait use
+                # statements and actual "import" use statements are the same, so we have no choice but to use class
+                # information for this: if we are inside a class, we can't be looking at a use statement.
+                if scopeChain.indexOf('.support.other.namespace.use') == -1 or currentClassName?
                     try
-                        currentClassName = @service.determineCurrentClassName(editor, bufferPosition)
+                        name = @service.resolveTypeAt(editor, bufferPosition, name)
 
                     catch error
                         reject()
                         return
 
-                    # Scope descriptors for trait use statements and actual "import" use statements are the same, so we
-                    # have no choice but to use class information for this.
-                    if not currentClassName?
-                        doResolve = false
+                return @service.getClassInfo(name, true).then (classInfo) =>
+                    type = ''
 
-                if doResolve
-                    className = @service.resolveTypeAt(editor, bufferPosition, className)
+                    if classInfo.type == 'class'
+                        type = (if classInfo.isAbstract then 'abstract ' else '') + 'class'
 
-            catch error
-                reject()
-                return
+                    else if classInfo.type == 'trait'
+                        type = 'trait'
 
-            return @service.getClassInfo(className, true).then (classInfo) =>
-                type = ''
+                    else if classInfo.type == 'interface'
+                        type = 'interface'
 
-                if classInfo.type == 'class'
-                    type = (if classInfo.isAbstract then 'abstract ' else '') + 'class'
+                    # Create a useful description to show in the tooltip.
+                    description = ''
 
-                else if classInfo.type == 'trait'
-                    type = 'trait'
+                    description += "<p><div>"
+                    description +=     type + ' ' + '<strong>' + classInfo.shortName + '</strong> &mdash; ' + classInfo.name
+                    description += '</div></p>'
 
-                else if classInfo.type == 'interface'
-                    type = 'interface'
+                    # Show the summary (short description).
+                    description += '<div>'
+                    description +=     (if classInfo.descriptions.short then classInfo.descriptions.short else '(No documentation available)')
+                    description += '</div>'
 
-                # Create a useful description to show in the tooltip.
-                description = ''
+                    # Show the (long) description.
+                    if classInfo.descriptions.long?.length > 0
+                        description += '<div class="section">'
+                        description +=     "<h4>Description</h4>"
+                        description +=     "<div>" + classInfo.descriptions.long + "</div>"
+                        description += "</div>"
 
-                description += "<p><div>"
-                description +=     type + ' ' + '<strong>' + classInfo.shortName + '</strong> &mdash; ' + classInfo.name
-                description += '</div></p>'
-
-                # Show the summary (short description).
-                description += '<div>'
-                description +=     (if classInfo.descriptions.short then classInfo.descriptions.short else '(No documentation available)')
-                description += '</div>'
-
-                # Show the (long) description.
-                if classInfo.descriptions.long?.length > 0
-                    description += '<div class="section">'
-                    description +=     "<h4>Description</h4>"
-                    description +=     "<div>" + classInfo.descriptions.long + "</div>"
-                    description += "</div>"
-
-                resolve(description)
+                    resolve(description)
 
     ###*
      * @inheritdoc
