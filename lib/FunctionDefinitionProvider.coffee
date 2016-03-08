@@ -24,24 +24,20 @@ class FunctionDefinitionProvider extends AbstractProvider
                 reject()
                 return
 
-            value = null
+            if currentClassName?
+                return @service.getClassInfo(currentClassName, true).then (classInfo) =>
+                    if name of classInfo.methods
+                        tooltipText = Utility.buildTooltipForFunction(classInfo.methods[name])
 
-            try
-                if currentClassName?
-                    value = @service.getClassMethod(currentClassName, name)
+                        resolve(tooltipText)
+                        return
 
-                else
-                    globalFunctions = @service.getGlobalFunctions()
+                    reject()
 
-                    if name of globalFunctions
-                        value = globalFunctions[name]
+            else
+                return @service.getGlobalFunctions(true).then (functions) =>
+                    if functions and name of functions
+                        resolve(Utility.buildTooltipForFunction(functions[name]))
+                        return
 
-            catch error
-                reject()
-                return
-
-            if not value?
-                reject()
-                return
-
-            resolve(Utility.buildTooltipForFunction(value))
+                    reject()
