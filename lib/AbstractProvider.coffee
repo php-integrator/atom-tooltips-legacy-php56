@@ -18,6 +18,11 @@ class AbstractProvider
     service: null
 
     ###*
+     * Keeps track of the currently pending promise.
+    ###
+    pendingPromise: null
+
+    ###*
      * Initializes this provider.
      *
      * @param {mixed} service
@@ -148,15 +153,46 @@ class AbstractProvider
         failureHandler = () =>
             return
 
-        @getTooltipForWord(editor, bufferPosition, name).then(successHandler, failureHandler)
+        @fetchTooltipForWord(editor, bufferPosition, name).then(successHandler, failureHandler)
 
     ###*
      * Removes the popover, if it is displayed.
     ###
     removePopover: () ->
+        if @pendingPromise?
+            @pendingPromise.reject()
+            @pendingPromise = null
+
         if @attachedPopover
             @attachedPopover.dispose()
             @attachedPopover = null
+
+    ###*
+     * Retrieves a tooltip for the word given.
+     *
+     * @param {TextEditor} editor         TextEditor to search for namespace of term.
+     * @param {Point}      bufferPosition The cursor location the term is at.
+     * @param {string}     name           The name of the element to retrieve the tooltip for.
+     *
+     * @return {Promise}
+    ###
+    fetchTooltipForWord: (editor, bufferPosition, name) ->
+        return new Promise (resolve, reject) =>
+            @pendingPromise = {
+                reject: reject
+            }
+
+            successHandler = (tooltipText) =>
+                @pendingPromise = null
+                resolve(tooltipText)
+                return
+
+            failureHandler = () =>
+                @pendingPromise = null
+                reject()
+                return
+
+            return @getTooltipForWord(editor, bufferPosition, name).then(successHandler, failureHandler)
 
     ###*
      * Retrieves a tooltip for the word given.
