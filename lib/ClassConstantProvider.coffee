@@ -17,7 +17,12 @@ class ClassConstantProvider extends AbstractProvider
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
         return new Promise (resolve, reject) =>
-            className = @service.getResultingTypeAt(editor, bufferPosition, true)
+            try
+                className = @service.getResultingTypeAt(editor, bufferPosition, true)
+
+            catch error
+                reject()
+                return
 
             return @service.getClassInfo(className, true).then (classInfo) =>
                 if name of classInfo.constants
