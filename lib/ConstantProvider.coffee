@@ -17,9 +17,14 @@ class MethodProvider extends AbstractProvider
     ###
     getTooltipForWord: (editor, bufferPosition, name) ->
         return new Promise (resolve, reject) =>
-            return @service.getGlobalConstants(true).then (constants) =>
+            successHandler = (constants) =>
                 if constants and name of constants
                     resolve(Utility.buildTooltipForConstant(constants[name]))
                     return
 
                 reject()
+
+            failureHandler = () =>
+                reject()
+
+            return @service.getGlobalConstants(true).then(successHandler, failureHandler) 

@@ -24,7 +24,7 @@ class ClassProvider extends AbstractProvider
                 reject()
                 return
 
-            return @service.getClassInfo(className, true).then (classInfo) =>
+            successHandler = (classInfo) =>
                 if name of classInfo.methods
                     tooltipText = Utility.buildTooltipForFunction(classInfo.methods[name])
 
@@ -32,3 +32,8 @@ class ClassProvider extends AbstractProvider
                     return
 
                 reject()
+
+            failureHandler = () =>
+                reject()
+
+            return @service.getClassInfo(className, true).then(successHandler, failureHandler)

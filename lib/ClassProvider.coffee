@@ -20,7 +20,10 @@ class ClassProvider extends AbstractProvider
         return new Promise (resolve, reject) =>
             scopeChain = editor.scopeDescriptorForBufferPosition(bufferPosition).getScopeChain()
 
-            return @service.determineCurrentClassName(editor, bufferPosition, true).then (currentClassName) =>
+            failureHandler = () =>
+                reject()
+
+            successHandler = (currentClassName) =>
                 # Don't attempt to resolve class names in use statements. Note that scope descriptors for trait use
                 # statements and actual "import" use statements are the same, so we have no choice but to use class
                 # information for this: if we are inside a class, we can't be looking at a use statement.
@@ -32,7 +35,7 @@ class ClassProvider extends AbstractProvider
                         reject()
                         return
 
-                return @service.getClassInfo(name, true).then (classInfo) =>
+                successHandler = (classInfo) =>
                     type = ''
 
                     if classInfo.type == 'class'
@@ -64,6 +67,10 @@ class ClassProvider extends AbstractProvider
                         description += "</div>"
 
                     resolve(description)
+
+                return @service.getClassInfo(name, true).then(successHandler, failureHandler)
+
+            return @service.determineCurrentClassName(editor, bufferPosition, true).then(successHandler, failureHandler)
 
     ###*
      * @inheritdoc

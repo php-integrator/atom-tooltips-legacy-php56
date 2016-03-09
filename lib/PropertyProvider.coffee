@@ -23,7 +23,7 @@ class PropertyProvider extends AbstractProvider
                 reject()
                 return
 
-            return @service.getClassInfo(className, true).then (classInfo) =>
+            successHandler = (classInfo) =>
                 if name of classInfo.properties
                     value = classInfo.properties[name]
 
@@ -74,3 +74,8 @@ class PropertyProvider extends AbstractProvider
                     return
 
                 reject()
+
+            failureHandler = () =>
+                reject()
+
+            return @service.getClassInfo(className, true).then(successHandler, failureHandler)
