@@ -11,7 +11,7 @@ class ClassProvider extends AbstractProvider
     ###*
      * @inheritdoc
     ###
-    hoverEventSelectors: '.entity.inherited-class, .support.namespace, .support.class'
+    hoverEventSelectors: '.entity.name.type.class, .entity.inherited-class, .support.namespace, .support.class'
 
     ###*
      * @inheritdoc

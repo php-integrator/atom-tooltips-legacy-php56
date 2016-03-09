@@ -1,5 +1,6 @@
 ## 0.5.0 (base 0.7.0)
 * Tooltip fetching is now mostly asynchronous, which should result in less minor hickups and freezes.
+* Class names after the class keyword (to start the definition) will now also show a tooltip, much like function definitions.
 
 ## 0.4.2
 * Fixed the tooltip not showing when hovering over magic methods such as `__construct`.
