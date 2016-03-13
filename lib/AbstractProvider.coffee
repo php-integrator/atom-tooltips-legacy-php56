@@ -146,6 +146,8 @@ class AbstractProvider
         name = $(selector).text()
 
         successHandler = (tooltipText) =>
+            @removePopover()
+
             if tooltipText?.length > 0
                 popoverElement = @getPopoverElementFromSelector(selector)
 
