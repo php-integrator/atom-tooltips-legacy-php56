@@ -70,6 +70,9 @@ class AbstractProvider
                 if pane != observedPane
                     @registerEventsForPane(pane)
 
+        atom.workspace.onDidStopChangingActivePaneItem (item) =>
+            @removePopover()
+
     ###*
      * Registers the necessary event handlers for the editors in the specified pane.
      *
