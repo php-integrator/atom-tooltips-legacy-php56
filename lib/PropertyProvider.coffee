@@ -23,6 +23,10 @@ class PropertyProvider extends AbstractProvider
                 reject()
                 return
 
+            if not className?
+                reject()
+                return
+
             successHandler = (classInfo) =>
                 if name of classInfo.properties
                     value = classInfo.properties[name]

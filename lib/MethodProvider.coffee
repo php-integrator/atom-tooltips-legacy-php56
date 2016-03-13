@@ -24,6 +24,10 @@ class ClassProvider extends AbstractProvider
                 reject()
                 return
 
+            if not className?
+                reject()
+                return
+
             successHandler = (classInfo) =>
                 if name of classInfo.methods
                     tooltipText = Utility.buildTooltipForFunction(classInfo.methods[name])

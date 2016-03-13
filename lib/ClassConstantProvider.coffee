@@ -24,6 +24,10 @@ class ClassConstantProvider extends AbstractProvider
                 reject()
                 return
 
+            if not className?
+                reject()
+                return
+
             successHandler = (classInfo) =>
                 if name of classInfo.constants
                     tooltipText = Utility.buildTooltipForConstant(classInfo.constants[name])
@@ -36,4 +40,4 @@ class ClassConstantProvider extends AbstractProvider
             failureHandler = () =>
                 reject()
 
-            return @service.getClassInfo(className, true).then(successHandler, failureHandler) 
+            return @service.getClassInfo(className, true).then(successHandler, failureHandler)
