@@ -1,3 +1,6 @@
+## 0.6.0 (base 0.8.0)
+* A couple of tooltip providers have become more asynchronous, improving responsiveness.
+
 ## 0.5.0 (base 0.7.0)
 * Tooltip fetching is now mostly asynchronous, which should result in less minor hickups and freezes.
 * Class names after the class keyword (to start the definition) will now also show a tooltip, much like function definitions.
