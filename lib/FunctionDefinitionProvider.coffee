@@ -31,7 +31,7 @@ class FunctionDefinitionProvider extends AbstractProvider
 
                         reject()
 
-                    return @service.getClassInfo(currentClassName, true).then(successHandler, failureHandler)
+                    return @service.getClassInfo(currentClassName).then(successHandler, failureHandler)
 
                 else
                     successHandler = (functions) =>
@@ -41,6 +41,6 @@ class FunctionDefinitionProvider extends AbstractProvider
 
                         reject()
 
-                    return @service.getGlobalFunctions(true).then(successHandler, failureHandler)
+                    return @service.getGlobalFunctions().then(successHandler, failureHandler)
 
-            return @service.determineCurrentClassName(editor, bufferPosition, true).then(successHandler, failureHandler)
+            return @service.determineCurrentClassName(editor, bufferPosition).then(successHandler, failureHandler)

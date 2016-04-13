@@ -24,17 +24,6 @@ class ClassProvider extends AbstractProvider
                 reject()
 
             successHandler = (currentClassName) =>
-                # Don't attempt to resolve class names in use statements. Note that scope descriptors for trait use
-                # statements and actual "import" use statements are the same, so we have no choice but to use class
-                # information for this: if we are inside a class, we can't be looking at a use statement.
-                if scopeChain.indexOf('.support.other.namespace.use') == -1 or currentClassName?
-                    try
-                        name = @service.resolveTypeAt(editor, bufferPosition, name)
-
-                    catch error
-                        reject()
-                        return
-
                 successHandler = (classInfo) =>
                     type = ''
 
@@ -68,9 +57,24 @@ class ClassProvider extends AbstractProvider
 
                     resolve(description)
 
-                return @service.getClassInfo(name, true).then(successHandler, failureHandler)
+                firstPromise = null
 
-            return @service.determineCurrentClassName(editor, bufferPosition, true).then(successHandler, failureHandler)
+                # Don't attempt to resolve class names in use statements. Note that scope descriptors for trait use
+                # statements and actual "import" use statements are the same, so we have no choice but to use class
+                # information for this: if we are inside a class, we can't be looking at a use statement.
+                if scopeChain.indexOf('.support.other.namespace.use') == -1 or currentClassName?
+                    firstPromise = @service.resolveTypeAt(editor, bufferPosition, name)
+
+                else
+                    firstPromise = new Promise (resolve, reject) ->
+                        resolve(name)
+
+                firstPromiseHandler = (name) =>
+                    return @service.getClassInfo(name).then(successHandler, failureHandler)
+
+                return firstPromise.then(firstPromiseHandler, failureHandler)
+
+            return @service.determineCurrentClassName(editor, bufferPosition).then(successHandler, failureHandler)
 
     ###*
      * @inheritdoc

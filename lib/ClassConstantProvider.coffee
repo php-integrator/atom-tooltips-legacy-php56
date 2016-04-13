@@ -34,6 +34,6 @@ class ClassConstantProvider extends AbstractProvider
 
                     reject()
 
-                return @service.getClassInfo(className, true).then(successHandler, failureHandler)
+                return @service.getClassInfo(className).then(successHandler, failureHandler)
 
-            return @service.getResultingTypeAt(editor, bufferPosition, true, true).then(resultingTypeSuccessHandler, failureHandler)
+            return @service.getResultingTypeAt(editor, bufferPosition, true).then(resultingTypeSuccessHandler, failureHandler)

@@ -27,4 +27,4 @@ class FunctionProvider extends AbstractProvider
             failureHandler = () =>
                 reject()
 
-            return @service.getGlobalFunctions(true).then(successHandler, failureHandler)
+            return @service.getGlobalFunctions().then(successHandler, failureHandler)

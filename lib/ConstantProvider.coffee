@@ -27,4 +27,4 @@ class MethodProvider extends AbstractProvider
             failureHandler = () =>
                 reject()
 
-            return @service.getGlobalConstants(true).then(successHandler, failureHandler) 
+            return @service.getGlobalConstants().then(successHandler, failureHandler) 
