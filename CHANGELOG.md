@@ -1,3 +1,6 @@
+## 0.6.1 (base 0.9.0)
+* Updated to use the most recent version of the base service.
+
 ## 0.6.0 (base 0.8.0)
 * A couple of tooltip providers have become more asynchronous, improving responsiveness.
 
