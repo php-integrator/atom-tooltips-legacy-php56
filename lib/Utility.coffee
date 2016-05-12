@@ -96,10 +96,10 @@ module.exports =
             description +=     "<div><table>" + parametersDescription + "</table></div>"
             description += "</div>"
 
-        returnValue = '<strong>' + @buildTypeSpecificationFromTypeArray(value.returnTypes) + '</strong>'
+        returnValue = @buildTypeSpecificationFromTypeArray(value.returnTypes)
 
         if value.returnDescription
-            returnValue += ' ' + value.returnDescription
+            returnValue += ' &mdash; ' + value.returnDescription
 
         description += '<div class="section">'
         description +=     "<h4>Returns</h4>"
@@ -168,10 +168,10 @@ module.exports =
             description +=     "<div>" + value.longDescription + "</div>"
             description += "</div>"
 
-        returnValue = '<strong>' + @buildTypeSpecificationFromTypeArray(value.types) + '</strong>'
+        returnValue = @buildTypeSpecificationFromTypeArray(value.types)
 
         if value.returnDescription
-            returnValue += ' ' + value.returnDescription
+            returnValue += ' &mdash; ' + value.returnDescription
 
         description += '<div class="section">'
         description +=     "<h4>Type</h4>"
@@ -207,10 +207,10 @@ module.exports =
             description +=     "<div>" + value.longDescription + "</div>"
             description += "</div>"
 
-        returnValue = '<strong>' + @buildTypeSpecificationFromTypeArray(value.types) + '</strong>'
+        returnValue = @buildTypeSpecificationFromTypeArray(value.types)
 
         if value.returnDescription
-            returnValue += ' ' + value.returnDescription
+            returnValue += ' &mdash; ' + value.returnDescription
 
         description += '<div class="section">'
         description +=     "<h4>Type</h4>"
