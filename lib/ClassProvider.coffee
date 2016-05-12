@@ -45,14 +45,14 @@ class ClassProvider extends AbstractProvider
 
                     # Show the summary (short description).
                     description += '<div>'
-                    description +=     (if classInfo.descriptions.short then classInfo.descriptions.short else '(No documentation available)')
+                    description +=     (if classInfo.shortDescription then classInfo.shortDescription else '(No documentation available)')
                     description += '</div>'
 
                     # Show the (long) description.
-                    if classInfo.descriptions.long?.length > 0
+                    if classInfo.longDescription?.length > 0
                         description += '<div class="section">'
                         description +=     "<h4>Description</h4>"
-                        description +=     "<div>" + classInfo.descriptions.long + "</div>"
+                        description +=     "<div>" + classInfo.longDescription + "</div>"
                         description += "</div>"
 
                     resolve(description)
