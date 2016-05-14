@@ -20,20 +20,29 @@ class ClassConstantProvider extends AbstractProvider
             failureHandler = () =>
                 reject()
 
-            resultingTypeSuccessHandler = (className) =>
-                if not className?
+            resultingTypeSuccessHandler = (types) =>
+                if types.length == 0
                     reject()
                     return
 
-                successHandler = (classInfo) =>
-                    if name of classInfo.constants
-                        tooltipText = Utility.buildTooltipForConstant(classInfo.constants[name])
+                successHandler = (classInfoArray) =>
+                    for classInfo in classInfoArray
+                        if name of classInfo.constants
+                            tooltipText = Utility.buildTooltipForConstant(classInfo.constants[name])
 
-                        resolve(tooltipText)
-                        return
+                            resolve(tooltipText)
+                            return
 
                     reject()
 
-                return @service.getClassInfo(className).then(successHandler, failureHandler)
+                promises = []
 
-            return @service.getResultingTypeAt(editor, bufferPosition, true).then(resultingTypeSuccessHandler, failureHandler)
+                for type in types
+                    promises.push @service.getClassInfo(type)
+
+                Promise.all(promises).then(successHandler, failureHandler)
+
+            return @service.getResultingTypesAt(editor, bufferPosition, true).then(
+                resultingTypeSuccessHandler,
+                failureHandler
+            )
