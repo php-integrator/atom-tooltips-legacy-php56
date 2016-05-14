@@ -170,8 +170,8 @@ module.exports =
 
         returnValue = @buildTypeSpecificationFromTypeArray(value.types)
 
-        if value.returnDescription
-            returnValue += ' &mdash; ' + value.returnDescription
+        if value.typeDescription
+            returnValue += ' &mdash; ' + value.typeDescription
 
         description += '<div class="section">'
         description +=     "<h4>Type</h4>"
@@ -212,8 +212,8 @@ module.exports =
 
         returnValue = @buildTypeSpecificationFromTypeArray(value.types)
 
-        if value.returnDescription
-            returnValue += ' &mdash; ' + value.returnDescription
+        if value.typeDescription
+            returnValue += ' &mdash; ' + value.typeDescription
 
         description += '<div class="section">'
         description +=     "<h4>Type</h4>"
