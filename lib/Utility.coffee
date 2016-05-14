@@ -186,7 +186,10 @@ module.exports =
      * @return {string}
     ###
     buildTooltipForConstant: (value) ->
-        returnType = @buildTypeSpecificationFromTypeArray(value.types)
+        returnType = ''
+
+        if value.types.length > 0
+            returnType = @buildTypeSpecificationFromTypeArray(value.types)
 
         # Create a useful description to show in the tooltip.
         description = ''
