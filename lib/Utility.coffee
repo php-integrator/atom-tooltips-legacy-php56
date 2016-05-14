@@ -153,7 +153,7 @@ module.exports =
         description = ''
 
         description += "<p><div>"
-        description += accessModifier + ' ' + returnType + '<strong>' + ' $' + name + '</strong>'
+        description += accessModifier + ' ' + returnType + '<strong>' + ' $' + value.name + '</strong>'
         description += '</div></p>'
 
         # Show the summary (short description).
