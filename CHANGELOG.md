@@ -1,4 +1,4 @@
-## 0.6.2 (base 0.10.9)
+## 1.0.0 (base 1.0.0)
 * Tweak the styling of the return block a bit.
 * The return section of tooltips will always be shown, regardless of whether the type is known or not.
 * Unknown return types will now no longer be shown as 'mixed', which makes it clearer to the user that documentation is missing.
