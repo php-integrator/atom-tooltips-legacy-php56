@@ -88,7 +88,10 @@ class AbstractProvider
      * Deactives the provider.
     ###
     deactivate: () ->
-        @subAtom.dispose()
+        if @subAtom
+            @subAtom.dispose()
+            @subAtom = null
+            
         @removePopover()
 
     ###*
