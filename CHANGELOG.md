@@ -1,5 +1,6 @@
 ## 1.1.0 (base 1.3.0)
 * Update to use the most recent version of the base service.
+* Fix navigation to qualified global constants with namespace prefix not working.
 
 ## 1.0.3
 * Fix tooltips not working on built-in PHP functions - properly this time.

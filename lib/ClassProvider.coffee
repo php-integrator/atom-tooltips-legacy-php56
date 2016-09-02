@@ -1,5 +1,3 @@
-$ = require 'jquery'
-
 AbstractProvider = require './AbstractProvider'
 
 module.exports =
@@ -106,12 +104,17 @@ class ClassProvider extends AbstractProvider
         if $(selector).prev().hasClass('namespace') || $(selector).next().hasClass('inherited-class')
             return $(selector).parent().children('.namespace, .inherited-class')
 
+        if $(selector).next().hasClass('constant') && $(selector).hasClass('namespace')
+           return null
+
         return selector
 
     ###*
      * @inheritdoc
     ###
     getPopoverElementFromSelector: (selector) ->
+        $ = require 'jquery'
+        
         # getSelectorFromEvent can return multiple items because namespaces and class names are different HTML elements.
         # We have to select one to attach the popover to.
         array = $(selector).toArray()
