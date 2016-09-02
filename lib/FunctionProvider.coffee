@@ -18,6 +18,9 @@ class FunctionProvider extends AbstractProvider
     getTooltipForWord: (editor, bufferPosition, name) ->
         return new Promise (resolve, reject) =>
             successHandler = (functions) =>
+                if name?[0] != '\\'
+                    name = '\\' + name
+                    
                 if functions and name of functions
                     resolve(Utility.buildTooltipForFunction(functions[name]))
                     return
