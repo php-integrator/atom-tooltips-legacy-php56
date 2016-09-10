@@ -1,3 +1,6 @@
+## 1.0.4
+* Rename the package and repository.
+
 ## 1.0.3
 * Fix tooltips not working on built-in PHP functions - properly this time.
 
