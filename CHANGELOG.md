@@ -3,6 +3,9 @@
 * Fix tooltips for qualified global constants with namespace prefix not working.
 * Fix tooltips for qualified global functions with namespace prefix not working.
 
+## 1.0.4
+* Rename the package and repository.
+
 ## 1.0.3
 * Fix tooltips not working on built-in PHP functions - properly this time.
 

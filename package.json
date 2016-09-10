@@ -1,9 +1,9 @@
 {
   "name": "php-integrator-tooltips",
   "main": "./lib/Main",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Shows tooltips (e.g. for methods and classes) in your PHP source code.",
-  "repository": "https://github.com/Gert-dev/php-integrator-tooltips.git",
+  "repository": "https://github.com/php-integrator/atom-tooltips.git",
   "license": "GPL-3.0",
   "engines": {
     "atom": ">=1.8.0 <2.0.0"
