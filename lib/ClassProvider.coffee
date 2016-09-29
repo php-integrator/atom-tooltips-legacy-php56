@@ -1,3 +1,4 @@
+Utility = require './Utility'
 AbstractProvider = require './AbstractProvider'
 
 module.exports =
@@ -23,37 +24,9 @@ class ClassProvider extends AbstractProvider
 
             successHandler = (currentClassName) =>
                 successHandler = (classInfo) =>
-                    type = ''
+                    tooltipText = Utility.buildTooltipForClasslike(classInfo)
 
-                    if classInfo.type == 'class'
-                        type = (if classInfo.isAbstract then 'abstract ' else '') + 'class'
-
-                    else if classInfo.type == 'trait'
-                        type = 'trait'
-
-                    else if classInfo.type == 'interface'
-                        type = 'interface'
-
-                    # Create a useful description to show in the tooltip.
-                    description = ''
-
-                    description += "<p><div>"
-                    description +=     type + ' ' + '<strong>' + classInfo.shortName + '</strong> &mdash; ' + classInfo.name
-                    description += '</div></p>'
-
-                    # Show the summary (short description).
-                    description += '<div>'
-                    description +=     (if classInfo.shortDescription then classInfo.shortDescription else '(No documentation available)')
-                    description += '</div>'
-
-                    # Show the (long) description.
-                    if classInfo.longDescription?.length > 0
-                        description += '<div class="section">'
-                        description +=     "<h4>Description</h4>"
-                        description +=     "<div>" + classInfo.longDescription + "</div>"
-                        description += "</div>"
-
-                    resolve(description)
+                    resolve(tooltipText)
 
                 firstPromise = null
 
@@ -114,7 +87,7 @@ class ClassProvider extends AbstractProvider
     ###
     getPopoverElementFromSelector: (selector) ->
         $ = require 'jquery'
-        
+
         # getSelectorFromEvent can return multiple items because namespaces and class names are different HTML elements.
         # We have to select one to attach the popover to.
         array = $(selector).toArray()

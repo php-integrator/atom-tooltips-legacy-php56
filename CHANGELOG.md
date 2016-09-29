@@ -1,5 +1,5 @@
 ## 1.1.0 (base 1.3.0)
-* Update to use the most recent version of the base service.
+* The information displayed has been tweaked.
 * Fix tooltips for qualified global constants with namespace prefix not working.
 * Fix tooltips for qualified global functions with namespace prefix not working.
 
