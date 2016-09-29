@@ -85,8 +85,8 @@ module.exports =
 
             parametersDescription += "</strong></td>"
 
-            parametersDescription += "<td>" + (if param.types.length > 0 then @buildTypeSpecificationFromTypeArray(param.types) else '&nbsp;') + '</td>'
-            parametersDescription += "<td>" + (if param.description then param.description else '&nbsp;') + '</td>'
+            parametersDescription += '<td>' + (if param.types.length > 0 then @buildTypeSpecificationFromTypeArray(param.types) else '&nbsp;') + '</td>'
+            parametersDescription += '<td>' + (if param.description then param.description else '&nbsp;') + '</td>'
 
             parametersDescription += "</tr>"
 
