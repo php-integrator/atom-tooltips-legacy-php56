@@ -91,7 +91,7 @@ class AbstractProvider
         if @subAtom
             @subAtom.dispose()
             @subAtom = null
-            
+
         @removePopover()
 
     ###*
@@ -155,7 +155,7 @@ class AbstractProvider
                 popoverElement = @getPopoverElementFromSelector(selector)
 
                 @attachedPopover = @service.createAttachedPopover(popoverElement)
-                @attachedPopover.setText('<div style="margin-top: -1em;">' + tooltipText + '</div>')
+                @attachedPopover.setText('<div class="php-integrator-tooltips-popover">' + tooltipText + '</div>')
                 @attachedPopover.showAfter(delay, fadeInTime)
 
         failureHandler = () =>
