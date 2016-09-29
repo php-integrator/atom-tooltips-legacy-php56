@@ -65,9 +65,9 @@ module.exports =
         parametersDescription = ""
 
         for param in value.parameters
-            parametersDescription += "<tr>"
+            parametersDescription += '<tr>'
 
-            parametersDescription += "<td>•&nbsp;<strong>"
+            parametersDescription += '<td class="php-integrator-tooltips-parameter-name">•&nbsp;'
 
             if param.isOptional
                 parametersDescription += '['
@@ -83,10 +83,10 @@ module.exports =
             if param.isOptional
                 parametersDescription += ']'
 
-            parametersDescription += "</strong></td>"
+            parametersDescription += "</td>"
 
-            parametersDescription += '<td>' + (if param.types.length > 0 then @buildTypeSpecificationFromTypeArray(param.types) else '&nbsp;') + '</td>'
-            parametersDescription += '<td>' + (if param.description then param.description else '&nbsp;') + '</td>'
+            parametersDescription += '<td class="php-integrator-tooltips-parameter-type">' + (if param.types.length > 0 then @buildTypeSpecificationFromTypeArray(param.types) else '&nbsp;') + '</td>'
+            parametersDescription += '<td class="php-integrator-tooltips-parameter-description">' + (if param.description then param.description else '&nbsp;') + '</td>'
 
             parametersDescription += "</tr>"
 
