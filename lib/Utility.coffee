@@ -107,12 +107,14 @@ module.exports =
 
         returnValue = @buildTypeSpecificationFromTypeArray(value.returnTypes)
 
+        returnDescription = ''
+
         if value.returnDescription
-            returnValue += ' &mdash; ' + value.returnDescription
+            returnDescription = ' &mdash; ' + value.returnDescription
 
         description += '<div class="section">'
-        description +=     "<h4>Returns</h4>"
-        description +=     "<div>" + returnValue + "</div>"
+        description +=     '<h4>Returns</h4>'
+        description +=     '<div><span class="php-integrator-tooltips-return-type">' + returnValue + '</span>' + returnDescription + '</div>'
         description += "</div>"
 
         # Show an overview of the exceptions the method can throw.
@@ -160,12 +162,14 @@ module.exports =
 
         returnValue = @buildTypeSpecificationFromTypeArray(value.types)
 
-        if value.typeDescription
-            returnValue += ' &mdash; ' + value.typeDescription
+        returnDescription = ''
+
+        if value.returnDescription
+            returnDescription = ' &mdash; ' + value.returnDescription
 
         description += '<div class="section">'
-        description +=     "<h4>Type</h4>"
-        description +=     "<div>" + returnValue + "</div>"
+        description +=     '<h4>Type</h4>'
+        description +=     '<div><span class="php-integrator-tooltips-return-type">' + returnValue + '</span>' + returnDescription + '</div>'
         description += "</div>"
 
     ###*
@@ -193,12 +197,14 @@ module.exports =
 
         returnValue = @buildTypeSpecificationFromTypeArray(value.types)
 
-        if value.typeDescription
-            returnValue += ' &mdash; ' + value.typeDescription
+        returnDescription = ''
+
+        if value.returnDescription
+            returnDescription = ' &mdash; ' + value.returnDescription
 
         description += '<div class="section">'
-        description +=     "<h4>Type</h4>"
-        description +=     "<div>" + returnValue + "</div>"
+        description +=     '<h4>Type</h4>'
+        description +=     '<div><span class="php-integrator-tooltips-return-type">' + returnValue + '</span>' + returnDescription + '</div>'
         description += "</div>"
 
         return description
