@@ -1,7 +1,9 @@
 ## 1.1.0 (base 1.3.0)
 * The information displayed has been tweaked.
 * Fix navigation to unqualified global constants not working.
+* Fix navigation to unqualified global functions not working.
 * Fix navigation to global constants imported using use statements not working.
+* Fix navigation to global functions imported using use statements not working.
 * Fix tooltips for qualified global constants with namespace prefix not working.
 * Fix tooltips for qualified global functions with namespace prefix not working.
 
