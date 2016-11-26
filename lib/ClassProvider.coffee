@@ -34,7 +34,7 @@ class ClassProvider extends AbstractProvider
                 # statements and actual "import" use statements are the same, so we have no choice but to use class
                 # information for this: if we are inside a class, we can't be looking at a use statement.
                 if scopeChain.indexOf('.support.other.namespace.use') == -1 or currentClassName?
-                    firstPromise = @service.resolveTypeAt(editor, bufferPosition, name)
+                    firstPromise = @service.resolveTypeAt(editor, bufferPosition, name, 'classlike')
 
                 else
                     firstPromise = new Promise (resolve, reject) ->
