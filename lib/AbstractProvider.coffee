@@ -121,10 +121,10 @@ class AbstractProvider
         @subAtom.add scrollViewElement, 'mouseout', @hoverEventSelectors, (event) =>
             @removePopover()
 
-        @subAtom.add textEditorElement.shadowRoot.querySelector('.horizontal-scrollbar'), 'scroll', (event) =>
+        @subAtom.add textEditorElement.shadowRoot.querySelector('.horizontal-scrollbar')?, 'scroll', (event) =>
             @removePopover()
 
-        @subAtom.add textEditorElement.shadowRoot.querySelector('.vertical-scrollbar'), 'scroll', (event) =>
+        @subAtom.add textEditorElement.shadowRoot.querySelector('.vertical-scrollbar')?, 'scroll', (event) =>
             @removePopover()
 
         # Ticket #107 - Mouseout isn't generated until the mouse moves, even when scrolling (with the keyboard or
