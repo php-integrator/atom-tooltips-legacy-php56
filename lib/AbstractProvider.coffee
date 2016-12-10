@@ -103,29 +103,36 @@ class AbstractProvider
         textEditorElement = atom.views.getView(editor)
         scrollViewElement = textEditorElement.shadowRoot.querySelector('.scroll-view')
 
-        @subAtom.add scrollViewElement, 'mouseover', @hoverEventSelectors, (event) =>
-            selector = @getSelectorFromEvent(event)
+        if scrollViewElement?
+            @subAtom.add scrollViewElement, 'mouseover', @hoverEventSelectors, (event) =>
+                selector = @getSelectorFromEvent(event)
 
-            if selector == null
-                return
+                if selector == null
+                    return
 
-            editorViewComponent = atom.views.getView(editor).component
+                editorViewComponent = atom.views.getView(editor).component
 
-            # Ticket #140 - In rare cases the component is null.
-            if editorViewComponent
-                cursorPosition = editorViewComponent.screenPositionForMouseEvent(event)
+                # Ticket #140 - In rare cases the component is null.
+                if editorViewComponent
+                    cursorPosition = editorViewComponent.screenPositionForMouseEvent(event)
 
+                    @removePopover()
+                    @showPopoverFor(editor, selector, cursorPosition)
+
+            @subAtom.add scrollViewElement, 'mouseout', @hoverEventSelectors, (event) =>
                 @removePopover()
-                @showPopoverFor(editor, selector, cursorPosition)
 
-        @subAtom.add scrollViewElement, 'mouseout', @hoverEventSelectors, (event) =>
-            @removePopover()
+        horizontalScrollbar = textEditorElement.shadowRoot.querySelector('.horizontal-scrollbar')
 
-        @subAtom.add textEditorElement.shadowRoot.querySelector('.horizontal-scrollbar')?, 'scroll', (event) =>
-            @removePopover()
+        if horizontalScrollbar?
+            @subAtom.add horizontalScrollbar, 'scroll', (event) =>
+                @removePopover()
 
-        @subAtom.add textEditorElement.shadowRoot.querySelector('.vertical-scrollbar')?, 'scroll', (event) =>
-            @removePopover()
+        verticalScrollbar = textEditorElement.shadowRoot.querySelector('.vertical-scrollbar')
+
+        if verticalScrollbar?
+            @subAtom.add verticalScrollbar, 'scroll', (event) =>
+                @removePopover()
 
         # Ticket #107 - Mouseout isn't generated until the mouse moves, even when scrolling (with the keyboard or
         # mouse). If the element goes out of the view in the meantime, its HTML element disappears, never removing
