@@ -1,4 +1,4 @@
-## 1.1.0 (base 1.3.0)
+## 1.1.0 (base 2.0.0)
 * The information displayed has been tweaked.
 * Fix navigation to unqualified global constants not working.
 * Fix navigation to unqualified global functions not working.
