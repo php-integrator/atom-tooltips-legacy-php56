@@ -1,3 +1,6 @@
+## 1.1.1
+* Ensure the subAtom property is always initialized.
+
 ## 1.1.0 (base 2.0.0)
 * The information displayed has been tweaked.
 * Fix navigation to unqualified global constants not working.
