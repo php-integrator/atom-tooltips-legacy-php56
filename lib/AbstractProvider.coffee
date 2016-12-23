@@ -49,8 +49,6 @@ class AbstractProvider
      * Does the actual initialization.
     ###
     doActualInitialization: () ->
-        @subAtom = new SubAtom
-
         atom.workspace.observeTextEditors (editor) =>
             if /text.html.php$/.test(editor.getGrammar().scopeName)
                 @registerEvents(editor)
@@ -104,7 +102,7 @@ class AbstractProvider
         scrollViewElement = textEditorElement.shadowRoot.querySelector('.scroll-view')
 
         if scrollViewElement?
-            @subAtom.add scrollViewElement, 'mouseover', @hoverEventSelectors, (event) =>
+            @getSubAtom().add scrollViewElement, 'mouseover', @hoverEventSelectors, (event) =>
                 selector = @getSelectorFromEvent(event)
 
                 if selector == null
@@ -119,19 +117,19 @@ class AbstractProvider
                     @removePopover()
                     @showPopoverFor(editor, selector, cursorPosition)
 
-            @subAtom.add scrollViewElement, 'mouseout', @hoverEventSelectors, (event) =>
+            @getSubAtom().add scrollViewElement, 'mouseout', @hoverEventSelectors, (event) =>
                 @removePopover()
 
         horizontalScrollbar = textEditorElement.shadowRoot.querySelector('.horizontal-scrollbar')
 
         if horizontalScrollbar?
-            @subAtom.add horizontalScrollbar, 'scroll', (event) =>
+            @getSubAtom().add horizontalScrollbar, 'scroll', (event) =>
                 @removePopover()
 
         verticalScrollbar = textEditorElement.shadowRoot.querySelector('.vertical-scrollbar')
 
         if verticalScrollbar?
-            @subAtom.add verticalScrollbar, 'scroll', (event) =>
+            @getSubAtom().add verticalScrollbar, 'scroll', (event) =>
                 @removePopover()
 
         # Ticket #107 - Mouseout isn't generated until the mouse moves, even when scrolling (with the keyboard or
@@ -236,3 +234,12 @@ class AbstractProvider
     ###
     getPopoverElementFromSelector: (selector) ->
         return selector
+
+    ###*
+     * @return {Object}
+    ###
+    getSubAtom: () ->
+        if not @subAtom
+            @subAtom = new SubAtom()
+
+        return @subAtom
