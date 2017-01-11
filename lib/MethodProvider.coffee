@@ -10,7 +10,7 @@ class ClassProvider extends AbstractProvider
     ###*
      * @inheritdoc
     ###
-    hoverEventSelectors: '.function-call.object, .function-call.static'
+    hoverEventSelectors: '.syntax--function-call.syntax--object, .syntax--function-call.syntax--static'
 
     ###*
      * @inheritdoc

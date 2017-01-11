@@ -10,7 +10,7 @@ class ClassConstantProvider extends AbstractProvider
     ###*
      * @inheritdoc
     ###
-    hoverEventSelectors: '.constant.other.class'
+    hoverEventSelectors: '.syntax--constant.syntax--other.syntax--class'
 
     ###*
      * @inheritdoc

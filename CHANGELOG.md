@@ -1,3 +1,6 @@
+## 1.1.3
+* Fix tooltips no longer working due to updated syntax class selectors.
+
 ## 1.1.2
 * Fix deprecations.
 

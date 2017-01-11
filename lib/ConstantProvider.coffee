@@ -10,7 +10,7 @@ class MethodProvider extends AbstractProvider
     ###*
      * @inheritdoc
     ###
-    hoverEventSelectors: '.constant.other.php, .support.other.namespace.php'
+    hoverEventSelectors: '.syntax--constant.syntax--other.syntax--php, .syntax--support.syntax--other.syntax--namespace.syntax--php'
 
     ###*
      * @inheritdoc

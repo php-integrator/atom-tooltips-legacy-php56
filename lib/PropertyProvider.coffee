@@ -10,7 +10,7 @@ class PropertyProvider extends AbstractProvider
     ###*
      * @inheritdoc
     ###
-    hoverEventSelectors: '.property'
+    hoverEventSelectors: '.syntax--property'
 
     ###*
      * @inheritdoc
