@@ -33,7 +33,7 @@ class ClassProvider extends AbstractProvider
                 # Don't attempt to resolve class names in use statements. Note that scope descriptors for trait use
                 # statements and actual "import" use statements are the same, so we have no choice but to use class
                 # information for this: if we are inside a class, we can't be looking at a use statement.
-                if scopeChain.indexOf('.support.other.namespace.use') == -1 or currentClassName?
+                if scopeChain.indexOf('.syntax--support.syntax--other.syntax--namespace.syntax--use') == -1 or currentClassName?
                     firstPromise = @service.resolveTypeAt(editor, bufferPosition, name, 'classlike')
 
                 else
@@ -65,19 +65,19 @@ class ClassProvider extends AbstractProvider
 
         $ = require 'jquery'
 
-        if $(selector).parent().hasClass('function argument')
-            return $(selector).parent().children('.namespace, .class:not(.operator):not(.constant)')
+        if $(selector).parent().hasClass('syntax--function syntax--argument')
+            return $(selector).parent().children('.syntax--namespace, .syntax--class:not(.syntax--operator):not(.syntax--constant)')
 
-        if $(selector).prev().hasClass('namespace') && $(selector).hasClass('class')
+        if $(selector).prev().hasClass('syntax--namespace') && $(selector).hasClass('syntax--class')
             return $([$(selector).prev()[0], selector])
 
-        if $(selector).next().hasClass('class') && $(selector).hasClass('namespace')
+        if $(selector).next().hasClass('syntax--class') && $(selector).hasClass('syntax--namespace')
            return $([selector, $(selector).next()[0]])
 
-        if $(selector).prev().hasClass('namespace') || $(selector).next().hasClass('inherited-class')
+        if $(selector).prev().hasClass('syntax--namespace') || $(selector).next().hasClass('syntax--inherited-class')
             return $(selector).parent().children('.namespace, .inherited-class')
 
-        if $(selector).next().hasClass('constant') && $(selector).hasClass('namespace')
+        if $(selector).next().hasClass('syntax--constant') && $(selector).hasClass('syntax--namespace')
            return null
 
         return selector
