@@ -99,7 +99,7 @@ class AbstractProvider
     ###
     registerEvents: (editor) ->
         textEditorElement = atom.views.getView(editor)
-        scrollViewElement = textEditorElement.shadowRoot.querySelector('.scroll-view')
+        scrollViewElement = textEditorElement.querySelector('.scroll-view')
 
         if scrollViewElement?
             @getSubAtom().add scrollViewElement, 'mouseover', @hoverEventSelectors, (event) =>
@@ -120,13 +120,13 @@ class AbstractProvider
             @getSubAtom().add scrollViewElement, 'mouseout', @hoverEventSelectors, (event) =>
                 @removePopover()
 
-        horizontalScrollbar = textEditorElement.shadowRoot.querySelector('.horizontal-scrollbar')
+        horizontalScrollbar = textEditorElement.querySelector('.horizontal-scrollbar')
 
         if horizontalScrollbar?
             @getSubAtom().add horizontalScrollbar, 'scroll', (event) =>
                 @removePopover()
 
-        verticalScrollbar = textEditorElement.shadowRoot.querySelector('.vertical-scrollbar')
+        verticalScrollbar = textEditorElement.querySelector('.vertical-scrollbar')
 
         if verticalScrollbar?
             @getSubAtom().add verticalScrollbar, 'scroll', (event) =>

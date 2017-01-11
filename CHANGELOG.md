@@ -1,3 +1,6 @@
+## 1.1.2
+* Fix deprecations.
+
 ## 1.1.1
 * Ensure the subAtom property is always initialized.
 
