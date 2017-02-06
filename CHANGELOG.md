@@ -1,3 +1,6 @@
+## 1.1.4
+* Fix tooltips for FQCN's not working.
+
 ## 1.1.3
 * Fix tooltips no longer working due to updated syntax class selectors.
 
