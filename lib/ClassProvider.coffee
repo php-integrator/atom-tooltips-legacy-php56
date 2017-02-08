@@ -33,7 +33,7 @@ class ClassProvider extends AbstractProvider
                 # Don't attempt to resolve class names in use statements. Note that scope descriptors for trait use
                 # statements and actual "import" use statements are the same, so we have no choice but to use class
                 # information for this: if we are inside a class, we can't be looking at a use statement.
-                if scopeChain.indexOf('.syntax--support.syntax--other.syntax--namespace.syntax--use') == -1 or currentClassName?
+                if scopeChain.indexOf('.support.other.namespace.use') == -1 or currentClassName?
                     firstPromise = @service.resolveTypeAt(editor, bufferPosition, name, 'classlike')
 
                 else
