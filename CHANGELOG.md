@@ -1,3 +1,6 @@
+## 1.1.6
+* Rename package to demarcate legacy status.
+
 ## 1.1.5
 * Fix tooltips for use statements not always working in Atom >= 1.13.
 
