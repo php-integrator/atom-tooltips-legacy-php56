@@ -3,7 +3,7 @@
   "main": "./lib/Main",
   "version": "1.1.5",
   "description": "Shows tooltips (e.g. for methods and classes) in your PHP source code.",
-  "repository": "php-integrator/atom-tooltips",
+  "repository": "php-integrator/atom-tooltips-legacy-php56",
   "license": "GPL-3.0",
   "engines": {
     "atom": ">=1.13.0 <2.0.0"
